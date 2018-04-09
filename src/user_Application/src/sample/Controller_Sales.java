@@ -149,7 +149,7 @@ public class Controller_Sales implements Initializable {
 
 
 
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_Deal_NOK_Sales.fxml"));
+            Parent deal = FXMLLoader.load(getClass().getResource("Popup_Deal_NOK.fxml"));
             Scene scene = new Scene(deal);
 
             Stage primaryStage = new Stage();

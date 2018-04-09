@@ -20,8 +20,6 @@ public class Controller_Appraise implements Initializable {
     private Button deal_LookupButton;
     @FXML
     private Button deal_Appraise_OKButton;
-    @FXML
-    private Button deal_Appraise_NOKButton;
 
     // 감정원 메인 페이지에서 일어날 수 있는 3가지 액션. 거래 진행, 다이아 조회, 감정 진행 순이다.
     @FXML
@@ -42,7 +40,18 @@ public class Controller_Appraise implements Initializable {
     }
     @FXML
     public void appraise_Lookup(ActionEvent actionEvent) {
+        try {
+            Parent deal = FXMLLoader.load(getClass().getResource("LookupDia_Appraise.fxml"));
+            Scene scene = new Scene(deal);
+            Stage primaryStage = (Stage) appraise_DealButton.getScene().getWindow();
+            primaryStage.close();
 
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("<감정원> 다이아 정보 조회");
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     public void appraise_Appraise(ActionEvent actionEvent){
@@ -132,7 +141,7 @@ public class Controller_Appraise implements Initializable {
 
 
 
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_Deal_NOK_Appraise.fxml"));
+            Parent deal = FXMLLoader.load(getClass().getResource("Popup_Deal_NOK.fxml"));
             Scene scene = new Scene(deal);
 
             Stage primaryStage = new Stage();
@@ -160,11 +169,6 @@ public class Controller_Appraise implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    @FXML
-    public void deal_Appraise_NOK(ActionEvent actionEvent){
-        Stage primaryStage = (Stage) deal_Appraise_NOKButton.getScene().getWindow();
-        primaryStage.close();
     }
 
 
