@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Appraise">
    <children>
       <StackPane prefHeight="150.0" prefWidth="200.0" />
       <StackPane prefHeight="120.0" prefWidth="200.0">
@@ -15,7 +15,7 @@
             <Insets />
          </VBox.margin>
          <children>
-            <Button fx:id="btn_MainScreen_Deal_Sales" alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#mainScreen_Deal" prefWidth="200.0" text="기존 다이아 업데이트" textAlignment="CENTER">
+            <Button fx:id="btn_AppraiseScreen_Update" alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#appraiseScreen_Select_Update" prefWidth="200.0" text="기존 다이아 업데이트" textAlignment="CENTER">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -33,7 +33,7 @@
       </StackPane>
       <StackPane prefHeight="120.0" prefWidth="200.0">
          <children>
-            <Button alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#mainScreen_Lookup" prefWidth="200.0" text="신규 다이아 등록" textAlignment="CENTER">
+            <Button alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" onAction="#appraiseScreen_Select_Add" prefWidth="200.0" text="신규 다이아 등록" textAlignment="CENTER">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -45,7 +45,7 @@
       </StackPane>
       <StackPane alignment="CENTER_RIGHT" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="돌아가기">
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="돌아가기" onAction="#appraiseScreen_Select_ReturnBack">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Lookup">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Appraise">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -25,7 +25,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </TextField>
-            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#lookupScreen_DiaCheck" text="조회">
+            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#appraiseScreen_Update_DiaCheck" text="조회">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -58,7 +58,7 @@
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btn_LookupScreen_ReturnBack" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#lookupScreen_ReturnBack" text="돌아가기">
+                  <Button fx:id="btn_AppraiseScreen_Update_ReturnBack" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#appraiseScreen_Update_ReturnBack" text="돌아가기">
                      <font>
                         <Font name="Gulim" size="16.0" />
                      </font>
@@ -66,7 +66,7 @@
                         <Insets right="17.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btn_LookupScreen_ReturnBack1" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#lookupScreen_ReturnBack" text="업데이트">
+                  <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#appraiseScreen_Update_Update" text="업데이트">
                      <font>
                         <Font name="Gulim" size="16.0" />
                      </font>

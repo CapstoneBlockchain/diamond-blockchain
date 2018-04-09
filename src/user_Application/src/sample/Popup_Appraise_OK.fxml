@@ -8,7 +8,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Lookup">
+<?import javafx.scene.image.Image?>
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Appraise">
    <children>
       <HBox prefHeight="80.0" prefWidth="200.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -17,6 +18,9 @@
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
+               <image>
+                  <Image url = "@resource/appraise.png"/>
+               </image>
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -39,7 +43,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btn_Popup_Lookup_OK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_Lookup_OK" text="확인">
+            <Button fx:id="btn_Popup_Appraise_OK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_Appraise_OK" text="확인">
                <font>
                   <Font name="Gulim" size="14.0" />
                </font>

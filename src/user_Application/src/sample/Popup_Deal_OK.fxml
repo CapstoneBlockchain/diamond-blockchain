@@ -19,6 +19,7 @@
                   <Insets right="20.0" />
                </HBox.margin>
                <image>
+                  <Image url = "@resource/deal.png"/>
                </image>
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
