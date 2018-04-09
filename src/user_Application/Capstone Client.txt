@@ -1,0 +1,26 @@
+● 주석처리된 부분 ( API 받아온 이후 정보에 따라 유동적으로 움직이도록 코드 붙여야하는 부분 )
+<Controller>
+	dealScreen_UserCheck1 	: user1 조회 시 성공 || 실패
+	dealScreen_UserCheck2 	: user2 조회 시 성공 || 실패
+
+	dealScreen_Deal		: 거래 성공 || 실패
+
+
+<Controller_Lookup>
+	lookupScreen_DiaCheck	: 다이아몬드 조회 시 성공 || 실패
+
+
+<Controller_Appraise>
+	appraiseScreen_Add_DiaCheck	: 다이아몬드 조회 시 성공 || 실패
+	appraiseScreen_Update_DiaCheck	: 다이아몬드 조회 시 성공 || 실패
+
+	appraiseScreen_Add_Add		: 다이아몬드 신규 등록 시 성공 || 실패
+	appraiseScreen_Update_Update	: 다이아몬드 업데이트 시 성공 || 실패
+
+
+
+
+
+● 이미지 파일 이쁜거로 수정하기
+
+● API 붙이기

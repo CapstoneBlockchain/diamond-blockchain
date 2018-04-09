@@ -102,29 +102,22 @@ public class Controller implements Initializable {
 
     @FXML
     public void mainScreen_Appraise(ActionEvent actionEvent) {
-
-    }
-
-    @FXML
-    public void dealScreen_UserCheck1(ActionEvent actionEvent) {
         try {
-            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
-            Scene scene = new Scene(deal);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Select.fxml"));
+            Parent parent = loader.load();
 
-            Stage primaryStage = new Stage();
+            Controller_Appraise controller = loader.getController();
+            controller.setLoginInfo(loginInfo);
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 완료");
-            primaryStage.show();*/
+            Scene scene = new Scene(parent);
 
 
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_NOK.fxml"));
-            Scene scene = new Scene(deal);
-
-            Stage primaryStage = new Stage();
+            Stage primaryStage = (Stage) btn_MainScreen_Deal_Appraise.getScene().getWindow();
+            primaryStage.close();
 
             primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 실패");
+            primaryStage.setTitle("<감정원> 다이아 감정");
+
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,7 +125,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void dealScreen_UserCheck2(ActionEvent actionEvent) {
+    public void dealScreen_UserCheck1(ActionEvent actionEvent) {
         try {
             Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
             Scene scene = new Scene(deal);
@@ -152,6 +145,32 @@ public class Controller implements Initializable {
             primaryStage.setScene(scene);
             primaryStage.setTitle("조회 실패");
             primaryStage.show();*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void dealScreen_UserCheck2(ActionEvent actionEvent) {
+        try {
+            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
+            Scene scene = new Scene(deal);
+
+            Stage primaryStage = new Stage();
+
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("조회 완료");
+            primaryStage.show();*/
+
+
+            Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_NOK.fxml"));
+            Scene scene = new Scene(deal);
+
+            Stage primaryStage = new Stage();
+
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("조회 실패");
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -200,7 +219,7 @@ public class Controller implements Initializable {
     @FXML
     public void dealScreen_Deal(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Deal_OK.fxml"));
+            /*FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Deal_OK.fxml"));
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
@@ -213,17 +232,17 @@ public class Controller implements Initializable {
             primaryStage.setScene(scene);
             primaryStage.setTitle("거래 완료!");
 
-            primaryStage.show();
+            primaryStage.show();*/
 
 
-            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_Deal_NOK.fxml"));
+            Parent deal = FXMLLoader.load(getClass().getResource("Popup_Deal_NOK.fxml"));
             Scene scene = new Scene(deal);
 
             Stage primaryStage = new Stage();
 
             primaryStage.setScene(scene);
             primaryStage.setTitle("거래 실패");
-            primaryStage.show();*/
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
