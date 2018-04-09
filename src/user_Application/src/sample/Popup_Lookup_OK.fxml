@@ -2,14 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Sales">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Lookup">
    <children>
       <HBox prefHeight="80.0" prefWidth="200.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -18,18 +17,15 @@
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
-               <image>
-                  <Image url="@../../resource/diamond.png" />
-               </image>
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아의 소유자 정보가">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 정보 조회가">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="성공적으로 변경되었습니다.">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="완료되었습니다.">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
@@ -43,7 +39,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Button fx:id="deal_Sales_OKButton" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" text="확인" onAction="#deal_Sales_OK">
+            <Button fx:id="btn_Popup_Lookup_OK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_Lookup_OK" text="확인">
                <font>
                   <Font name="Gulim" size="14.0" />
                </font>

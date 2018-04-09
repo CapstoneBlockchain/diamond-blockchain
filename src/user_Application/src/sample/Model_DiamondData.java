@@ -2,11 +2,11 @@ package sample;
 
 import javafx.beans.property.StringProperty;
 
-public class DiamondDataModel {
+public class Model_DiamondData {
     private StringProperty list;
     private StringProperty data;
 
-    public DiamondDataModel(StringProperty list, StringProperty data){
+    public Model_DiamondData(StringProperty list, StringProperty data){
         this.list = list;
         this.data = data;
     }
