@@ -108,32 +108,6 @@ public class Controller implements Initializable {
     @FXML
     public void dealScreen_UserCheck1(ActionEvent actionEvent) {
         try {
-            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
-            Scene scene = new Scene(deal);
-
-            Stage primaryStage = new Stage();
-
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 완료");
-            primaryStage.show();*/
-
-
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_NOK.fxml"));
-            Scene scene = new Scene(deal);
-
-            Stage primaryStage = new Stage();
-
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 실패");
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void dealScreen_UserCheck2(ActionEvent actionEvent) {
-        try {
             Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
             Scene scene = new Scene(deal);
 
@@ -152,6 +126,32 @@ public class Controller implements Initializable {
             primaryStage.setScene(scene);
             primaryStage.setTitle("조회 실패");
             primaryStage.show();*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void dealScreen_UserCheck2(ActionEvent actionEvent) {
+        try {
+            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
+            Scene scene = new Scene(deal);
+
+            Stage primaryStage = new Stage();
+
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("조회 완료");
+            primaryStage.show();*/
+
+
+            Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_NOK.fxml"));
+            Scene scene = new Scene(deal);
+
+            Stage primaryStage = new Stage();
+
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("조회 실패");
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

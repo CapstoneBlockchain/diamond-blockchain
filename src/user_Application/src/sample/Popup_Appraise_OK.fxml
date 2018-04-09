@@ -20,12 +20,12 @@
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 정보 조회에">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 감정 정보 등록에">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="실패하였습니다.">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="성공하였습니다.">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
@@ -39,7 +39,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btn_Popup_Lookup_NOK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_Lookup_NOK" text="확인">
+            <Button fx:id="btn_Popup_Lookup_OK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_Lookup_OK" text="확인">
                <font>
                   <Font name="Gulim" size="14.0" />
                </font>
