@@ -8,14 +8,14 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox fx:controller="sample.Controller_Sales" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="sample.Controller" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane prefHeight="120.0" prefWidth="200.0">
          <VBox.margin>
             <Insets />
          </VBox.margin>
          <children>
-            <Button fx:id="sales_DealButton" alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="180.0" text="거래 진행" textAlignment="CENTER" onAction="#sales_Deal">
+            <Button fx:id="btn_MainScreen_Deal_Sales" alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="180.0" text="거래 진행" textAlignment="CENTER" onAction="#mainScreen_Deal">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -33,7 +33,7 @@
       </StackPane>
       <StackPane prefHeight="120.0" prefWidth="200.0">
          <children>
-            <Button alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="180.0" text="다이아 정보 조회" textAlignment="CENTER" onAction="#sales_Lookup">
+            <Button alignment="CENTER" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="180.0" text="다이아 정보 조회" textAlignment="CENTER" onAction="#mainScreen_Lookup">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<VBox fx:controller="sample.Controller_Appraise" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="sample.Controller" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="50.0" prefWidth="200.0">
          <VBox.margin>
@@ -31,7 +31,7 @@
                   <Font name="Gulim" size="14.0" />
                </font>
             </TextField>
-            <Button fx:id="deal_LookupButton" minHeight="35.0" minWidth="60.0" mnemonicParsing="false" text="조회" textAlignment="CENTER" onAction="#deal_User1_Check">
+            <Button fx:id="btn_DealScreen_UserCheck" minHeight="35.0" minWidth="60.0" mnemonicParsing="false" text="조회" textAlignment="CENTER" onAction="#dealScreen_UserCheck1">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -56,7 +56,7 @@
                   <Font name="Gulim" size="14.0" />
                </font>
             </TextField>
-            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" text="조회" textAlignment="CENTER" onAction="#deal_User2_Check">
+            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" text="조회" textAlignment="CENTER" onAction="#dealScreen_UserCheck2">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -100,7 +100,7 @@
             <Insets top="60.0" />
          </VBox.margin>
          <children>
-            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="돌아가기" onAction="#deal_ReturnBack">
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="돌아가기" onAction="#dealScreen_ReturnBack">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -108,7 +108,7 @@
                   <Insets right="17.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="거래하기" onAction="#deal_Deal">
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="거래하기" onAction="#dealScreen_Deal">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>

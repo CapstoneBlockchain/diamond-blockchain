@@ -8,25 +8,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox fx:controller="sample.Controller_Appraise" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Lookup">
    <children>
       <HBox prefHeight="80.0" prefWidth="200.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아의 소유자 정보가">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 정보 조회에">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="성공적으로 변경되었습니다.">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="실패하였습니다.">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
@@ -40,7 +39,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Button fx:id="deal_Appraise_OKButton" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" text="확인" onAction="#deal_Appraise_OK">
+            <Button fx:id="btn_Popup_Lookup_NOK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_Lookup_NOK" text="확인">
                <font>
                   <Font name="Gulim" size="14.0" />
                </font>

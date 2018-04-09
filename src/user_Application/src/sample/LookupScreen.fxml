@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_DiamondLookup_Appraise">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Lookup">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -25,7 +25,7 @@
                   <Insets left="40.0" />
                </HBox.margin>
             </TextField>
-            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" text="조회" onAction="#lookup_Lookup">
+            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" text="조회" onAction="#lookupScreen_DiaCheck">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -56,7 +56,7 @@
       </StackPane>
       <StackPane alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Button fx:id="lookup_Appraise_ReturnButton" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="돌아가기" onAction="#lookup_ReturnBack">
+            <Button fx:id="btn_LookupScreen_ReturnBack" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="돌아가기" onAction="#lookupScreen_ReturnBack">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
