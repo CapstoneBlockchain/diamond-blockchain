@@ -5,7 +5,7 @@ import (
 "time"
 
 "github.com/hyperledger/fabric/core/chaincode/shim"
-"github.com/hyperledger/fabric/protos/peer"
+pb "github.com/hyperledger/fabric/protos/peer"
 	"strconv"
 	"encoding/json"
 )
@@ -58,7 +58,7 @@ func setGirdleThickness(minT string, maxT string) [2]string  {
 //
 // argument definition :
 // key
-func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
+func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	// Get the args from the transaction proposal
 	args := stub.GetStringArgs()
 	if len(args) != 2 {
@@ -78,7 +78,7 @@ func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response 
 // Invoke is called per transaction on the chaincode. Each transaction is
 // either a 'get' or a 'set' on the asset created by Init function. The Set
 // method may create a new asset by specifying a new key-value pair.
-func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
+func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	// Extract the function and args from the transaction proposal
 	fn, args := stub.GetFunctionAndParameters()
 
@@ -86,8 +86,11 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respons
 	var err error
 	if fn == "set" {
 		result, err = set(stub, args)
-	} else { // assume 'get' even if fn is nil
+	} else if fn == "get"{ // assume 'get' even if fn is nil
 		result, err = get(stub, args)
+	} else if fn == "query"{
+		response := query(stub, args)
+		return response
 	}
 	if err != nil {
 		return shim.Error(err.Error())
@@ -95,6 +98,18 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) peer.Respons
 
 	// Return the result as success payload
 	return shim.Success([]byte(result))
+}
+
+// query modify user information of specified diamond key
+//
+// argument definition :
+// query username userID
+func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
+	if len(args) != 3 {
+		return shim.Error("Incorrect arguments. Expecting a key")
+	}
+
+	return shim.Error("this is function not defined")
 }
 
 // Set stores the asset (both key and value) on the ledger. If the key exists,
@@ -162,6 +177,13 @@ func get(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Asset not found: %s", args[0])
 	}
 	return string(value), nil
+}
+
+// allQuery returns values of all Diamond
+//
+// no argument, this function is used to init function for initialize chaincode
+func allQuery(stub shim.ChaincodeStubInterface) pb.Response {
+	return shim.Error("this is function not defined")
 }
 
 // main function starts up the chaincode in the container during instantiate
