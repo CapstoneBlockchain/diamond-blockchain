@@ -22,20 +22,20 @@ type Diamond struct {
 	date time.Time
 	number int
 	shapeAndCut string
-	measurement [3]int
-	carat string
+	measurement [3]float64
+	carat float64
 	color string
 	clarity string
 	cut string
 	tableSize int
-	totalDepth int
-	girdleThickness [2]int
+	totalDepth float64
+	girdleThickness [2]string
 	laserInscription string
 	userInfo userInfo
 }
 
 // set Diamond data
-func setDiamondInfo(aUserInfo userInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement [3]int, aCarat string, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth int, aGirdleThickness [2]int, aLaserInscription string) Diamond {
+func setDiamondInfo(aUserInfo userInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement [3]float64, aCarat float64, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth float64, aGirdleThickness [2]string, aLaserInscription string) Diamond {
 	rDiamond := Diamond{userInfo: aUserInfo, date: aDate, number: aNumber, shapeAndCut: aShapeAndCut, measurement:aMeasurement, carat:aCarat, color:aColor, clarity:aClarity, cut:aCut, tableSize:aTableSize, totalDepth:aTotalDepth, girdleThickness:aGirdleThickness, laserInscription:aLaserInscription}
 	return rDiamond
 }
@@ -43,18 +43,21 @@ func setUserInfo(aName string, aID string) userInfo {
 	rUserInfo := userInfo{name:aName, ID:aID}
 	return rUserInfo
 }
-func setMeasurement(minR int, maxR int, height int) [3]int {
-	rMeasurement := [3]int{minR, maxR, height}
+func setMeasurement(minR float64, maxR float64, height float64) [3]float64 {
+	rMeasurement := [3]float64{minR, maxR, height}
 	return rMeasurement
 }
-func setGirdleThickness(minT int, maxT int) [2]int  {
-	rGirdleThickness := [2]int{minT, maxT}
+func setGirdleThickness(minT string, maxT string) [2]string  {
+	rGirdleThickness := [2]string{minT, maxT}
 	return rGirdleThickness
 }
 
 // Init is called during chaincode instantiation to initialize any
 // data. Note that chaincode upgrade also calls this function to reset
 // or to migrate data.
+//
+// argument definition :
+// key
 func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response {
 	// Get the args from the transaction proposal
 	args := stub.GetStringArgs()
@@ -63,7 +66,6 @@ func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) peer.Response 
 	}
 
 	// Set up any variables or assets here by calling stub.PutState()
-
 
 	// We store the key and the value on the ledger
 	err := stub.PutState(args[0], []byte(args[1]))
@@ -107,28 +109,28 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	}
 
 	nUserInfo := setUserInfo(args[0], args[1])
-	nMinR, err := strconv.Atoi(args[4])
-	nMaxR, err := strconv.Atoi(args[5])
-	nHeight, err := strconv.Atoi(args[6])
+	nMinR, err := strconv.ParseFloat(args[4], 64)
+	nMaxR, err := strconv.ParseFloat(args[5], 64)
+	nHeight, err := strconv.ParseFloat(args[6], 64)
 	if err != nil {
 		return "", fmt.Errorf("Failed to set asset: %s, %s, %s", args[4], args[5], args[6])
 	}
 	nMeasurement := setMeasurement(nMinR, nMaxR, nHeight)
-	nMinGirdle, err := strconv.Atoi(args[13])
-	nMaxGirdle, err := strconv.Atoi(args[14])
-	nGirdleThickness := setGirdleThickness(nMinGirdle, nMaxGirdle)
+	nGirdleThickness := setGirdleThickness(args[13], args[14])
 	if err != nil {
 		return "", fmt.Errorf("Failed to set asset: %s, %s", args[13], args[14])
 	}
 
 	nNumber, err := strconv.Atoi(args[2])
 	ntableSize, err := strconv.Atoi(args[11])
-	ntableDepth, err := strconv.Atoi(args[12])
+	ntableDepth, err := strconv.ParseFloat(args[12], 64)
 	if err != nil {
 		return "", fmt.Errorf("Failed to set asset: %s, %s, %s", args[2], args[11], args[12])
 	}
 
-	nDiamond := setDiamondInfo(nUserInfo, time.Now(), nNumber, args[3], nMeasurement, args[7], args[8], args[9], args[10], ntableSize, ntableDepth, nGirdleThickness, args[15])
+	nCarat, err := strconv.ParseFloat(args[7], 64)
+
+	nDiamond := setDiamondInfo(nUserInfo, time.Now(), nNumber, args[3], nMeasurement, nCarat, args[8], args[9], args[10], ntableSize, ntableDepth, nGirdleThickness, args[15])
 
 	bDiamond, err := json.Marshal(nDiamond)
 	if err != nil {
