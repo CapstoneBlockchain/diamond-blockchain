@@ -20,7 +20,7 @@
                   <Font name="Gulim" size="18.0" />
                </font>
             </Text>
-            <TextField prefHeight="35.0" prefWidth="400.0">
+            <TextField fx:id="text_Lookup_Diamond" prefHeight="35.0" prefWidth="400.0">
                <HBox.margin>
                   <Insets left="40.0" />
                </HBox.margin>

@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,9 +17,29 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     private int loginInfo;                          // 0이면 감정원, 1이면 판매소
+    private Diamond_DB_ForMidterm myDB;
+    private boolean userCheck1;
+    private boolean userCheck2;
+    private String checked_User1;
+    private String checked_User2;
+
+    @FXML
+    private TextField text_Deal_User1;
+    @FXML
+    private TextField text_Deal_User2;
+    @FXML
+    private TextField text_Deal_Diamond;
+    @FXML
+    public Text text_Popup_Deal_NOK;
+    @FXML
+    public Text text_Popup_User_NOK;
+    @FXML
+    public Text text_Popup_User_OK_1stLine;
+    @FXML
+    public Text text_Popup_User_NOK_1stLine;
+
     @FXML
     private Button btn_Login_Appraise;
-
     @FXML
     private Button btn_MainScreen_Deal_Sales;
     @FXML
@@ -41,6 +63,7 @@ public class Controller implements Initializable {
 
             Controller controller = loader.getController();
             controller.setLoginInfo(loginInfo);
+            controller.setMyDB(myDB);
 
             Scene scene = new Scene(parent);
 
@@ -74,10 +97,11 @@ public class Controller implements Initializable {
 
             Controller_Lookup controller = loader.getController();
             controller.setLoginInfo(loginInfo);
+            controller.setMyDB(myDB);
 
             Scene scene = new Scene(parent);
 
-            if(loginInfo==0){
+            if (loginInfo == 0) {
                 Stage primaryStage = (Stage) btn_MainScreen_Deal_Appraise.getScene().getWindow();
                 primaryStage.close();
 
@@ -85,8 +109,7 @@ public class Controller implements Initializable {
                 primaryStage.setTitle("<감정원> 다이아 정보 조회");
 
                 primaryStage.show();
-            }
-            else{
+            } else {
                 Stage primaryStage = (Stage) btn_MainScreen_Deal_Sales.getScene().getWindow();
                 primaryStage.close();
 
@@ -108,6 +131,7 @@ public class Controller implements Initializable {
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
+            controller.setMyDB(myDB);
 
             Scene scene = new Scene(parent);
 
@@ -127,24 +151,43 @@ public class Controller implements Initializable {
     @FXML
     public void dealScreen_UserCheck1(ActionEvent actionEvent) {
         try {
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
-            Scene scene = new Scene(deal);
+            if (myDB.checkUser(text_Deal_User1.getText())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_User_OK.fxml"));
+                Parent parent = loader.load();
 
-            Stage primaryStage = new Stage();
+                Stage primaryStage = new Stage();
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 완료");
-            primaryStage.show();
+                Controller controller = loader.getController();
+                controller.text_Popup_User_OK_1stLine.setText("다이아의 소유자 정보");
 
+                userCheck1=true;
+                checked_User1 = text_Deal_User2.getText();
 
-            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_NOK.fxml"));
-            Scene scene = new Scene(deal);
+                Scene scene = new Scene(parent);
 
-            Stage primaryStage = new Stage();
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 완료");
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 실패");
-            primaryStage.show();*/
+                primaryStage.show();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_User_NOK.fxml"));
+                Parent parent = loader.load();
+
+                Stage primaryStage = new Stage();
+
+                Controller controller = loader.getController();
+                controller.text_Popup_User_NOK_1stLine.setText("다이아의 소유자 정보");
+                controller.text_Popup_User_NOK.setText("※해당 ID는 존재하지 않습니다.");
+
+                Scene scene = new Scene(parent);
+
+                userCheck1 = false;
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 실패");
+
+                primaryStage.show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -153,24 +196,43 @@ public class Controller implements Initializable {
     @FXML
     public void dealScreen_UserCheck2(ActionEvent actionEvent) {
         try {
-            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_OK.fxml"));
-            Scene scene = new Scene(deal);
+            if (myDB.checkUser(text_Deal_User2.getText())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_User_OK.fxml"));
+                Parent parent = loader.load();
 
-            Stage primaryStage = new Stage();
+                Stage primaryStage = new Stage();
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 완료");
-            primaryStage.show();*/
+                Controller controller = loader.getController();
+                controller.text_Popup_User_OK_1stLine.setText("다이아의 소유자 정보");
 
+                userCheck2=true;
+                checked_User2 = text_Deal_User2.getText();
 
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_User_NOK.fxml"));
-            Scene scene = new Scene(deal);
+                Scene scene = new Scene(parent);
 
-            Stage primaryStage = new Stage();
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 완료");
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 실패");
-            primaryStage.show();
+                primaryStage.show();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_User_NOK.fxml"));
+                Parent parent = loader.load();
+
+                Stage primaryStage = new Stage();
+
+                Controller controller = loader.getController();
+                controller.text_Popup_User_NOK_1stLine.setText("다이아의 소유자 정보");
+                controller.text_Popup_User_NOK.setText("※해당 ID는 존재하지 않습니다.");
+
+                userCheck2=false;
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 실패");
+
+                primaryStage.show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,12 +241,13 @@ public class Controller implements Initializable {
     @FXML
     public void dealScreen_ReturnBack(ActionEvent actionEvent) {
         try {
-            if(loginInfo==0){
+            if (loginInfo == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
+                controller.setMyDB(myDB);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_DealScreen_UserCheck.getScene().getWindow();
@@ -194,13 +257,13 @@ public class Controller implements Initializable {
                 primaryStage.setTitle("<감정원> 메인화면");
 
                 primaryStage.show();
-            }
-            else{
+            } else {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Sales.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
+                controller.setMyDB(myDB);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_DealScreen_UserCheck.getScene().getWindow();
@@ -218,31 +281,69 @@ public class Controller implements Initializable {
 
     @FXML
     public void dealScreen_Deal(ActionEvent actionEvent) {
+        if (!checked_User1.equals(text_Deal_User1.getText())) {
+            userCheck1 = false;
+        }
+        if (!checked_User2.equals(text_Deal_User2.getText())) {
+            userCheck2 = false;
+        }
+        String message = "";
+        boolean check = false;
         try {
-            /*FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Deal_OK.fxml"));
-            Parent parent = loader.load();
+            if (userCheck1 && userCheck2) {
+                if (myDB.checkDia_Deal_Owner(text_Deal_User1.getText(), text_Deal_Diamond.getText())) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Deal_OK.fxml"));
+                    Parent parent = loader.load();
 
-            Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+                    Controller controller = loader.getController();
+                    controller.setLoginInfo(loginInfo);
+                    controller.setMyDB(myDB);
 
-            Scene scene = new Scene(parent);
-            Stage primaryStage = (Stage) btn_DealScreen_UserCheck.getScene().getWindow();
-            primaryStage.close();
+                    Scene scene = new Scene(parent);
+                    Stage primaryStage = (Stage) btn_DealScreen_UserCheck.getScene().getWindow();
+                    primaryStage.close();
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("거래 완료!");
+                    primaryStage.setScene(scene);
+                    primaryStage.setTitle("거래 완료!");
 
-            primaryStage.show();*/
+                    primaryStage.show();
 
+                    myDB.changeOwner_Deal(text_Deal_User2.getText(), text_Deal_Diamond.getText());
 
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_Deal_NOK.fxml"));
-            Scene scene = new Scene(deal);
+                    check = true;
+                } else {
+                    // 소유자와 다이아 정보 일치X
+                    message = "※해당 다이아를 소유하고 있지 않습니다.";
+                }
 
-            Stage primaryStage = new Stage();
+            } else if (userCheck1) {
+                // userCheck2 안됨.
+                message = "※다음 소유자 조회를 해주세요.";
+            } else if (userCheck2) {
+                // userCheck1 안됨.
+                message = "※기존 소유자 조회를 해주세요.";
+            } else {
+                // 둘 다 안됨.
+                message = "※소유자 조회를 진행해주세요.";
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("거래 실패");
-            primaryStage.show();
+            }
+
+            if (!check) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Deal_NOK.fxml"));
+                Parent parent = loader.load();
+
+                Controller controller = loader.getController();
+                controller.text_Popup_Deal_NOK.setText(message);
+
+                Scene scene = new Scene(parent);
+
+                Stage primaryStage = new Stage();
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("거래 실패");
+
+                primaryStage.show();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -254,12 +355,13 @@ public class Controller implements Initializable {
         primaryStage.close();
 
         try {
-            if(loginInfo==0){
+            if (loginInfo == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
+                controller.setMyDB(myDB);
 
                 Scene scene = new Scene(parent);
 
@@ -267,13 +369,13 @@ public class Controller implements Initializable {
                 primaryStage.setTitle("<감정원> 메인화면");
 
                 primaryStage.show();
-            }
-            else{
+            } else {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Sales.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
+                controller.setMyDB(myDB);
 
                 Scene scene = new Scene(parent);
 
@@ -298,6 +400,7 @@ public class Controller implements Initializable {
         Stage primaryStage = (Stage) btn_Popup_User_OK.getScene().getWindow();
         primaryStage.close();
     }
+
     @FXML
     public void popup_User_NOK(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) btn_Popup_User_NOK.getScene().getWindow();
@@ -308,10 +411,13 @@ public class Controller implements Initializable {
     public void login_Appraise(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
-            Parent parent = (Parent)loader.load();
+            Parent parent = (Parent) loader.load();
 
             Controller controller = loader.getController();
             controller.setLoginInfo(0);
+
+            Diamond_DB_ForMidterm testDB = new Diamond_DB_ForMidterm();
+            controller.setMyDB(testDB);
 
             Scene scene = new Scene(parent);
             Stage primaryStage = (Stage) btn_Login_Appraise.getScene().getWindow();
@@ -329,10 +435,13 @@ public class Controller implements Initializable {
     public void login_Sales(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Sales.fxml"));
-            Parent parent = (Parent)loader.load();
+            Parent parent = (Parent) loader.load();
 
             Controller controller = loader.getController();
             controller.setLoginInfo(1);
+
+            Diamond_DB_ForMidterm testDB = new Diamond_DB_ForMidterm();
+            controller.setMyDB(testDB);
 
             Scene scene = new Scene(parent);
             Stage primaryStage = (Stage) btn_Login_Appraise.getScene().getWindow();
@@ -348,10 +457,15 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        userCheck1 = false;
+        userCheck2 = false;
     }
 
-    public void setLoginInfo(int loginInfo){
+    public void setLoginInfo(int loginInfo) {
         this.loginInfo = loginInfo;
+    }
+
+    public void setMyDB(Diamond_DB_ForMidterm myDB) {
+        this.myDB = myDB;
     }
 }
