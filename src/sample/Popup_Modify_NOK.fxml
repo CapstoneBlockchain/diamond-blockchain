@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Appraise">
    <children>
       <HBox prefHeight="80.0" prefWidth="200.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -19,30 +19,22 @@
                   <Insets right="20.0" />
                </HBox.margin>
                <image>
-                  <Image url="@resource/userX.png" />
+                  <Image url="@resource/appraiseX.png" />
                </image>
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text fx:id="text_Popup_User_NOK_1stLine" strokeType="OUTSIDE" strokeWidth="0.0" text="다이아의 소유자 정보">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="데이터 수정에 실패하였습니다.">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="조회에 실패하였습니다.">
+                  <Text fx:id="text_Popup_Modify_NOK" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt; 이유">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
                      <VBox.margin>
                         <Insets top="15.0" />
-                     </VBox.margin>
-                  </Text>
-                  <Text fx:id="text_Popup_User_NOK" strokeType="OUTSIDE" strokeWidth="0.0" text="-&gt;이유">
-                     <font>
-                        <Font name="Gulim" size="17.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="25.0" />
                      </VBox.margin>
                   </Text>
                </children>
@@ -51,7 +43,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btn_Popup_User_NOK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_User_NOK" text="확인">
+            <Button fx:id="btn_Popup_Modify_NOK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#popup_Modify_NOK" text="확인">
                <font>
                   <Font name="Gulim" size="14.0" />
                </font>

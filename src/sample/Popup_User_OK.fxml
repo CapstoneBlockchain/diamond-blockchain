@@ -21,12 +21,12 @@
             </ImageView>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아의 소유자 정보">
+                  <Text fx:id="text_Popup_User_OK_1stLine" strokeType="OUTSIDE" strokeWidth="0.0" text="다이아의 소유자 정보">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="조회가 완료되었습니다.">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="조회에 성공하였습니다.">
                      <font>
                         <Font name="Gulim" size="17.0" />
                      </font>

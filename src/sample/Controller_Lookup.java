@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.Model_DiamondData;
 
@@ -21,6 +23,12 @@ import java.util.ResourceBundle;
 
 public class Controller_Lookup implements Initializable {
     private int loginInfo;
+    private Diamond_DB_ForMidterm myDB;
+
+    @FXML
+    private TextField text_Lookup_Diamond;
+    @FXML
+    public Text text_Popup_Lookup_NOK;
     @FXML
     private TableView<Model_DiamondData> myTableView;
     @FXML
@@ -35,30 +43,7 @@ public class Controller_Lookup implements Initializable {
     private Button btn_Popup_Lookup_NOK;
 
 
-    ObservableList<Model_DiamondData> myList = FXCollections.observableArrayList(
-            new Model_DiamondData(new SimpleStringProperty("Date"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Number"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Shape & Cut"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Measurement"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("UV fluorescence"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Carat"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Color"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Clarity"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Cut"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Table size"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Pavilion depth"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Total depth"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Crown angle"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Gridle state"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Gridle thickness"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Culet"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Polish"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Symmetry"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Symbols"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Comments"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("The facet diagram"),new SimpleStringProperty("...")),
-            new Model_DiamondData(new SimpleStringProperty("Laser inscription"),new SimpleStringProperty("..."))
-    );
+    ObservableList<Model_DiamondData> myList;
 
     @FXML
     public void lookupScreen_ReturnBack(ActionEvent actionEvent){
@@ -69,6 +54,7 @@ public class Controller_Lookup implements Initializable {
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
+                controller.setMyDB(myDB);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_LookupScreen_ReturnBack.getScene().getWindow();
@@ -85,6 +71,7 @@ public class Controller_Lookup implements Initializable {
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
+                controller.setMyDB(myDB);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_LookupScreen_ReturnBack.getScene().getWindow();
@@ -103,28 +90,59 @@ public class Controller_Lookup implements Initializable {
     @FXML
     public void lookupScreen_DiaCheck(ActionEvent actionEvent) {
         try {
-            Parent deal = FXMLLoader.load(getClass().getResource("Popup_Lookup_OK.fxml"));
-            Scene scene = new Scene(deal);
+            if(myDB.checkDia_Lookup(text_Lookup_Diamond.getText())){
+                Parent deal = FXMLLoader.load(getClass().getResource("Popup_Lookup_OK.fxml"));
+                Scene scene = new Scene(deal);
 
-            Stage primaryStage = new Stage();
+                Stage primaryStage = new Stage();
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 완료");
-            primaryStage.show();
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 완료");
+                primaryStage.show();
 
-            listColumn.setCellValueFactory(cellData->cellData.getValue().getList());
-            dataColumn.setCellValueFactory(cellData->cellData.getValue().getData());
-            myTableView.setItems(myList);
+                listColumn.setCellValueFactory(cellData->cellData.getValue().getList());
+                dataColumn.setCellValueFactory(cellData->cellData.getValue().getData());
+
+                DB_Diamond temp = myDB.getDia_Lookup(text_Lookup_Diamond.getText());
+                myList = FXCollections.observableArrayList(
+                        new Model_DiamondData(new SimpleStringProperty("Date"),new SimpleStringProperty(temp.getDate())),
+                        new Model_DiamondData(new SimpleStringProperty("User Name"),new SimpleStringProperty(temp.getUserName())),
+                        new Model_DiamondData(new SimpleStringProperty("User ID"),new SimpleStringProperty(temp.getUserID())),
+                        new Model_DiamondData(new SimpleStringProperty("Number"),new SimpleStringProperty(temp.getNumber())),
+                        new Model_DiamondData(new SimpleStringProperty("Shape & Cut"),new SimpleStringProperty(temp.getShapeAndCut())),
+                        new Model_DiamondData(new SimpleStringProperty("Min Radius"),new SimpleStringProperty(temp.getMinR())),
+                        new Model_DiamondData(new SimpleStringProperty("Max Radius"),new SimpleStringProperty(temp.getMaxR())),
+                        new Model_DiamondData(new SimpleStringProperty("Height"),new SimpleStringProperty(temp.getHeight())),
+                        new Model_DiamondData(new SimpleStringProperty("Carat"),new SimpleStringProperty(temp.getCarat())),
+                        new Model_DiamondData(new SimpleStringProperty("Color"),new SimpleStringProperty(temp.getColor())),
+                        new Model_DiamondData(new SimpleStringProperty("Clarity"),new SimpleStringProperty(temp.getClarity())),
+                        new Model_DiamondData(new SimpleStringProperty("Cut"),new SimpleStringProperty(temp.getCut())),
+                        new Model_DiamondData(new SimpleStringProperty("Table Size"),new SimpleStringProperty(temp.getTableSize())),
+                        new Model_DiamondData(new SimpleStringProperty("Total Depth"),new SimpleStringProperty(temp.getTotalDepth())),
+                        new Model_DiamondData(new SimpleStringProperty("Min Girdle"),new SimpleStringProperty(temp.getMinGirdle())),
+                        new Model_DiamondData(new SimpleStringProperty("Max Girdle"),new SimpleStringProperty(temp.getMaxGirdle())),
+                        new Model_DiamondData(new SimpleStringProperty("Laser Inscription"),new SimpleStringProperty(temp.getLaserInscription()))
+                );
 
 
-            /*Parent deal = FXMLLoader.load(getClass().getResource("Popup_Lookup_NOK.fxml"));
-            Scene scene = new Scene(deal);
+                myTableView.setItems(myList);
+            }
+            else{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Lookup_NOK.fxml"));
+                Parent parent = loader.load();
 
-            Stage primaryStage = new Stage();
+                Stage primaryStage = new Stage();
 
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("조회 실패");
-            primaryStage.show();*/
+                Controller_Lookup controller = loader.getController();
+                controller.text_Popup_Lookup_NOK.setText("※해당 다이아는 존재하지 않습니다.");
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 실패");
+
+                primaryStage.show();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -150,6 +168,9 @@ public class Controller_Lookup implements Initializable {
 
     public void setLoginInfo(int loginInfo){
         this.loginInfo = loginInfo;
+    }
+    public void setMyDB(Diamond_DB_ForMidterm myDB){
+        this.myDB = myDB;
     }
 
 }

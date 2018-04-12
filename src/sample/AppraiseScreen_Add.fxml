@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,21 +13,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Appraise">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Appraise">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 일련번호">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="유저 조회">
                <font>
                   <Font name="Gulim" size="18.0" />
                </font>
-            </Text>
-            <TextField prefHeight="35.0" prefWidth="400.0">
                <HBox.margin>
-                  <Insets left="40.0" />
+                  <Insets left="25.0" />
+               </HBox.margin>
+            </Text>
+            <TextField fx:id="text_Appraise_LookupUser" prefHeight="35.0" prefWidth="400.0">
+               <HBox.margin>
+                  <Insets left="70.0" />
                </HBox.margin>
             </TextField>
-            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_DiaCheck" text="조회">
+            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_UserCheck" text="조회">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -35,8 +40,50 @@
             </Button>
          </children>
          <VBox.margin>
-            <Insets top="10.0" />
+            <Insets top="20.0" />
          </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0">
+         <children>
+            <MenuButton fx:id="menu_Appraise_Add" alignment="CENTER" minHeight="27.0" minWidth="130.0" mnemonicParsing="false" text="항목" textAlignment="CENTER">
+              <items>
+                  <MenuItem mnemonicParsing="false" text="Date" onAction="#add_menuitem1"/>
+                  <MenuItem mnemonicParsing="false" text="Number" onAction="#add_menuitem2"/>
+                  <MenuItem mnemonicParsing="false" text="Shape &amp; Cut" onAction="#add_menuitem3"/>
+                  <MenuItem mnemonicParsing="false" text="Min Radius" onAction="#add_menuitem4"/>
+                  <MenuItem mnemonicParsing="false" text="Max Radius" onAction="#add_menuitem5"/>
+                  <MenuItem mnemonicParsing="false" text="Height" onAction="#add_menuitem6"/>
+                  <MenuItem mnemonicParsing="false" text="Carat" onAction="#add_menuitem7"/>
+                  <MenuItem mnemonicParsing="false" text="Color" onAction="#add_menuitem8"/>
+                  <MenuItem mnemonicParsing="false" text="Clarity" onAction="#add_menuitem9"/>
+                  <MenuItem mnemonicParsing="false" text="Cut" onAction="#add_menuitem10"/>
+                  <MenuItem mnemonicParsing="false" text="Table Size" onAction="#add_menuitem11"/>
+                  <MenuItem mnemonicParsing="false" text="Total Depth" onAction="#add_menuitem12"/>
+                  <MenuItem mnemonicParsing="false" text="Min Girdle" onAction="#add_menuitem13"/>
+                  <MenuItem mnemonicParsing="false" text="Max Girdle" onAction="#add_menuitem14"/>
+                  <MenuItem mnemonicParsing="false" text="Laser Inscription" onAction="#add_menuitem15"/>
+              </items>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font name="Gulim" size="12.0" />
+               </font>
+            </MenuButton>
+            <TextField fx:id="text_Appraise_AddData" prefHeight="35.0" prefWidth="400.0">
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </TextField>
+            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_Modify" text="등록">
+               <font>
+                  <Font name="Gulim" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="35.0" />
+               </HBox.margin>
+            </Button>
+         </children>
       </HBox>
       <StackPane prefHeight="350.0" prefWidth="200.0">
          <children>
@@ -53,6 +100,9 @@
                </columnResizePolicy>
             </TableView>
          </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </StackPane>
       <StackPane alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
@@ -63,7 +113,7 @@
                         <Font name="Gulim" size="16.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="17.0" top="10.0" />
+                        <Insets right="17.0" />
                      </HBox.margin>
                   </Button>
                   <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_Add" text="등록">
@@ -71,7 +121,7 @@
                         <Font name="Gulim" size="16.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="30.0" top="10.0" />
+                        <Insets right="30.0" />
                      </HBox.margin>
                   </Button>
                </children>
