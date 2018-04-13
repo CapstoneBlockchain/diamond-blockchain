@@ -161,7 +161,7 @@ public class Controller implements Initializable {
                 controller.text_Popup_User_OK_1stLine.setText("다이아의 소유자 정보");
 
                 userCheck1=true;
-                checked_User1 = text_Deal_User2.getText();
+                checked_User1 = text_Deal_User1.getText();
 
                 Scene scene = new Scene(parent);
 
