@@ -32,11 +32,12 @@ type Diamond struct {
 	girdleThickness [2]string
 	laserInscription string
 	userInfo userInfo
+	checkTheft bool
 }
 
 // set Diamond data
-func setDiamondInfo(aUserInfo userInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement [3]float64, aCarat float64, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth float64, aGirdleThickness [2]string, aLaserInscription string) Diamond {
-	rDiamond := Diamond{userInfo: aUserInfo, date: aDate, number: aNumber, shapeAndCut: aShapeAndCut, measurement:aMeasurement, carat:aCarat, color:aColor, clarity:aClarity, cut:aCut, tableSize:aTableSize, totalDepth:aTotalDepth, girdleThickness:aGirdleThickness, laserInscription:aLaserInscription}
+func setDiamondInfo(aUserInfo userInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement [3]float64, aCarat float64, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth float64, aGirdleThickness [2]string, aLaserInscription string, aCheckTheft bool) Diamond {
+	rDiamond := Diamond{userInfo: aUserInfo, date: aDate, number: aNumber, shapeAndCut: aShapeAndCut, measurement:aMeasurement, carat:aCarat, color:aColor, clarity:aClarity, cut:aCut, tableSize:aTableSize, totalDepth:aTotalDepth, girdleThickness:aGirdleThickness, laserInscription:aLaserInscription, checkTheft:aCheckTheft}
 	return rDiamond
 }
 func setUserInfo(aName string, aID string) userInfo {
@@ -91,6 +92,8 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 	} else if fn == "query"{
 		response := query(stub, args)
 		return response
+	} else {
+		return shim.Error(err.Error())
 	}
 	if err != nil {
 		return shim.Error(err.Error())
@@ -102,11 +105,19 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 
 // query modify user information of specified diamond key
 //
-// argument definition :
-// query username userID
+// no argument, this function is used to init function for initialize chaincode
+// or get history of key data change
 func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
-	if len(args) != 3 {
+	if len(args) < 1 && len(args) > 2{
 		return shim.Error("Incorrect arguments. Expecting a key")
+	}
+
+
+
+	var err error
+	_, err = get(stub, args)
+	if err != nil {
+		return shim.Error("this key don't exist in ledger")
 	}
 
 	return shim.Error("this is function not defined")
@@ -117,9 +128,9 @@ func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
 // diamond information initialize
 //
 // argument definition :
-// set username userID number shapeandcut minR maxR height carat color clarity cut tablesize totaldepth mingirdle maxgirdle laserinscription
+// set username userID number shapeandcut minR maxR height carat color clarity cut tablesize totaldepth mingirdle maxgirdle laserinscription checkTheft
 func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
-	if len(args) != 16 {
+	if len(args) != 17 {
 		return "", fmt.Errorf("Incorrect arguments. Expecting a key and a value")
 	}
 
@@ -144,8 +155,9 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	}
 
 	nCarat, err := strconv.ParseFloat(args[7], 64)
+	nCheckTheft, err := strconv.ParseBool(args[16])
 
-	nDiamond := setDiamondInfo(nUserInfo, time.Now(), nNumber, args[3], nMeasurement, nCarat, args[8], args[9], args[10], ntableSize, ntableDepth, nGirdleThickness, args[15])
+	nDiamond := setDiamondInfo(nUserInfo, time.Now(), nNumber, args[3], nMeasurement, nCarat, args[8], args[9], args[10], ntableSize, ntableDepth, nGirdleThickness, args[15], nCheckTheft)
 
 	bDiamond, err := json.Marshal(nDiamond)
 	if err != nil {
@@ -179,12 +191,6 @@ func get(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	return string(value), nil
 }
 
-// allQuery returns values of all Diamond
-//
-// no argument, this function is used to init function for initialize chaincode
-func allQuery(stub shim.ChaincodeStubInterface) pb.Response {
-	return shim.Error("this is function not defined")
-}
 
 // main function starts up the chaincode in the container during instantiate
 func main() {
