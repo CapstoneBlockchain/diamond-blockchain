@@ -105,6 +105,7 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 
 // example02를 참고하여 정의함
 // TODO : args를 ID가 아닌 userInfo로 받아야함
+// invoke 함수가 "거래"에 해당하는 함수임
 // Transaction changes the diamond owner from A to B
 // arguments definition:
 // 		invoke specifiedKey userID_A userID_B userName_B
@@ -160,6 +161,21 @@ func (t *DiamondChaincode) invoke(stub shim.ChaincodeStubInterface, args []strin
 		return shim.Error(err.Error())
 	}
 
+	return shim.Success(nil)
+}
+
+// registerNewDiamond, updateDiamond, setStolen 함수들은
+// get, set 함수들을 이용하여 구현...?
+// 그 후, Invoke 함수에서 각 기능(event?)에 해당하는 arguments를
+// 입력 받아서 실행하는 로직이면 되지 않을까여?
+
+// TODO : 새 다이아몬드 등록 함수
+func registerNewDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	return shim.Success(nil)
+}
+
+// TODO : 다이아몬드 감정서 업데이트 함수
+func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	return shim.Success(nil)
 }
 
