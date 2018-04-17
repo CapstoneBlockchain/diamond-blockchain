@@ -103,16 +103,82 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 	return shim.Success([]byte(result))
 }
 
+// example02를 참고하여 정의함
+// TODO : args를 ID가 아닌 userInfo로 받아야함
+// Transaction changes the diamond owner from A to B
+// arguments definition:
+// 		invoke specifiedKey userID_A userID_B userName_B
+func (t *DiamondChaincode) invoke(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	var diamondLaserInscription string
+	var originOwnerID, newOwnerID string
+	var newOwnerName string
+
+	var err error
+
+	if len(args) != 4 {
+		return shim.Error("Incorrect number of arguments. Expecting 4 : DiamondLaserDescription originOwnerID newOwnerID newOwnerName")
+	}
+
+	diamondLaserInscription = args[0]
+	originOwnerID = args[1]
+	newOwnerID = args[2]
+	newOwnerName = args[3]
+
+	// 다이아몬드 데이터를 가져옴
+	bDiamond, err := stub.GetState(diamondLaserInscription)
+	if err != nil {
+		return shim.Error("Failed to get state")
+	}
+	if bDiamond == nil {
+		return shim.Error("Diamond not found")
+	}
+
+	var nDiamond Diamond
+
+	// 데이터를 json 형식으로 변환
+	err = json.Unmarshal(bDiamond, &nDiamond)
+	if err != nil {
+		return shim.Error("Failed to decode diamond data")
+	}
+
+	// 기존 다이아몬드 소유자 정보 확인
+	if nDiamond.userInfo.ID != originOwnerID {
+		return shim.Error("Original Owner is not correct")
+	}
+
+	// 다이아몬드의 userInfo 업데이트
+	nDiamond.userInfo = setUserInfo(newOwnerName, newOwnerID)
+
+	bDiamond, err = json.Marshal(nDiamond)
+	if err != nil {
+		return shim.Error("Failed to encode diamond data")
+	}
+
+	// State를 ledger에 저장
+	err = stub.PutState(diamondLaserInscription, []byte(string(bDiamond)))
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+
+	return shim.Success(nil)
+}
+
+
 // query modify user information of specified diamond key
 //
 // no argument, this function is used to init function for initialize chaincode
 // or get history of key data change
+//
+// arguments definition:
+// 		1. "query" - init function or get history of key data change
+// 		2. "query specifiedKey" - print the diamond data of specified key
+// todo : query함수의 "init function or get history of key data change" 부분이 명확하지 않음
+// 예제들 살펴보니 자기가 짜기 나름임 -> query 내에서 처리하는 경우도 있고 invoke에서 query를 처리하는 경우도 있음
+// => 이걸 먼저 정의해야할듯?
 func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
 	if len(args) < 1 && len(args) > 2{
 		return shim.Error("Incorrect arguments. Expecting a key")
 	}
-
-
 
 	var err error
 	_, err = get(stub, args)
