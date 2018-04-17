@@ -163,6 +163,12 @@ func (t *DiamondChaincode) invoke(stub shim.ChaincodeStubInterface, args []strin
 	return shim.Success(nil)
 }
 
+// TODO : 도난 등록 함수 짜야함
+// arguments definition:
+// 		setStolen specifiedKey userID userName
+func setStolen(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	return shim.Success(nil)
+}
 
 // query modify user information of specified diamond key
 //
