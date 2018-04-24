@@ -85,83 +85,31 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 
 	var result string
 	var err error
+
+	// 새 다이아몬드 추가
 	if fn == "set" {
 		result, err = set(stub, args)
+	// 다이아몬드 정보 조회
 	} else if fn == "get"{ // assume 'get' even if fn is nil
 		result, err = get(stub, args)
+	// 거래 발생
 	} else if fn == "query"{
 		response := query(stub, args)
+		return response
+	// 도난 신고
+	} else if fn == "setStolen"{
+		response := setStolen(stub, args)
 		return response
 	} else {
 		return shim.Error(err.Error())
 	}
+
 	if err != nil {
 		return shim.Error(err.Error())
 	}
 
 	// Return the result as success payload
 	return shim.Success([]byte(result))
-}
-
-// example02를 참고하여 정의함
-// TODO : args를 ID가 아닌 userInfo로 받아야함
-// invoke 함수가 "거래"에 해당하는 함수임
-// Transaction changes the diamond owner from A to B
-// arguments definition:
-// 		invoke specifiedKey userID_A userID_B userName_B
-func (t *DiamondChaincode) invoke(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	var diamondLaserInscription string
-	var originOwnerID, newOwnerID string
-	var newOwnerName string
-
-	var err error
-
-	if len(args) != 4 {
-		return shim.Error("Incorrect number of arguments. Expecting 4 : DiamondLaserDescription originOwnerID newOwnerID newOwnerName")
-	}
-
-	diamondLaserInscription = args[0]
-	originOwnerID = args[1]
-	newOwnerID = args[2]
-	newOwnerName = args[3]
-
-	// 다이아몬드 데이터를 가져옴
-	bDiamond, err := stub.GetState(diamondLaserInscription)
-	if err != nil {
-		return shim.Error("Failed to get state")
-	}
-	if bDiamond == nil {
-		return shim.Error("Diamond not found")
-	}
-
-	var nDiamond Diamond
-
-	// 데이터를 json 형식으로 변환
-	err = json.Unmarshal(bDiamond, &nDiamond)
-	if err != nil {
-		return shim.Error("Failed to decode diamond data")
-	}
-
-	// 기존 다이아몬드 소유자 정보 확인
-	if nDiamond.userInfo.ID != originOwnerID {
-		return shim.Error("Original Owner is not correct")
-	}
-
-	// 다이아몬드의 userInfo 업데이트
-	nDiamond.userInfo = setUserInfo(newOwnerName, newOwnerID)
-
-	bDiamond, err = json.Marshal(nDiamond)
-	if err != nil {
-		return shim.Error("Failed to encode diamond data")
-	}
-
-	// State를 ledger에 저장
-	err = stub.PutState(diamondLaserInscription, []byte(string(bDiamond)))
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-
-	return shim.Success(nil)
 }
 
 // registerNewDiamond, updateDiamond, setStolen 함수들은
@@ -192,6 +140,7 @@ func setStolen(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 // or get history of key data change
 //
 // arguments definition:
+//	query userID
 // 		1. "query" - init function or get history of key data change
 // 		2. "query specifiedKey" - print the diamond data of specified key
 // todo : query함수의 "init function or get history of key data change" 부분이 명확하지 않음
