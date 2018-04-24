@@ -85,16 +85,21 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 
 	var result string
 	var err error
+
+	// 새 다이아몬드 추가
 	if fn == "set" {
 		result, err = set(stub, args)
+	// 다이아몬드 정보 조회
 	} else if fn == "get"{ // assume 'get' even if fn is nil
 		result, err = get(stub, args)
+	// 거래 발생 혹은 감정서 업데이트 혹은 도난 신고
 	} else if fn == "query"{
 		response := query(stub, args)
 		return response
 	} else {
 		return shim.Error(err.Error())
 	}
+
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -103,16 +108,40 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 	return shim.Success([]byte(result))
 }
 
+// TODO : 새 다이아몬드 등록 함수
+func registerNewDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	return shim.Success(nil)
+}
+
+// TODO : 다이아몬드 거래 반영 함수
+func changeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	return shim.Success(nil)
+}
+
+// TODO : 다이아몬드 감정서 업데이트 함수
+func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	return shim.Success(nil)
+}
+
+// TODO : 도난 등록 함수
+// arguments definition:
+func setStolen(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	return shim.Success(nil)
+}
+
 // query modify user information of specified diamond key
 //
 // no argument, this function is used to init function for initialize chaincode
 // or get history of key data change
+// argument definition :
+// query serviceName args...
+//		1. query changeOwner laserInscription originOwnerID newOwnerID newOwnerName
+//		2. query updateDiamond Diamond
+//		3. query setStolen laserInscription ownerID
 func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
 	if len(args) < 1 && len(args) > 2{
 		return shim.Error("Incorrect arguments. Expecting a key")
 	}
-
-
 
 	var err error
 	_, err = get(stub, args)
