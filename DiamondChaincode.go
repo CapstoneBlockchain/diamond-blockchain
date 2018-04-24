@@ -92,13 +92,9 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 	// 다이아몬드 정보 조회
 	} else if fn == "get"{ // assume 'get' even if fn is nil
 		result, err = get(stub, args)
-	// 거래 발생
+	// 거래 발생 혹은 감정서 업데이트 혹은 도난 신고
 	} else if fn == "query"{
 		response := query(stub, args)
-		return response
-	// 도난 신고
-	} else if fn == "setStolen"{
-		response := setStolen(stub, args)
 		return response
 	} else {
 		return shim.Error(err.Error())
@@ -112,13 +108,13 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 	return shim.Success([]byte(result))
 }
 
-// registerNewDiamond, updateDiamond, setStolen 함수들은
-// get, set 함수들을 이용하여 구현...?
-// 그 후, Invoke 함수에서 각 기능(event?)에 해당하는 arguments를
-// 입력 받아서 실행하는 로직이면 되지 않을까여?
-
 // TODO : 새 다이아몬드 등록 함수
 func registerNewDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	return shim.Success(nil)
+}
+
+// TODO : 다이아몬드 거래 반영 함수
+func changeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	return shim.Success(nil)
 }
 
@@ -127,9 +123,8 @@ func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response 
 	return shim.Success(nil)
 }
 
-// TODO : 도난 등록 함수 짜야함
+// TODO : 도난 등록 함수
 // arguments definition:
-// 		setStolen specifiedKey userID userName
 func setStolen(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	return shim.Success(nil)
 }
@@ -138,14 +133,11 @@ func setStolen(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 //
 // no argument, this function is used to init function for initialize chaincode
 // or get history of key data change
-//
-// arguments definition:
-//	query userID
-// 		1. "query" - init function or get history of key data change
-// 		2. "query specifiedKey" - print the diamond data of specified key
-// todo : query함수의 "init function or get history of key data change" 부분이 명확하지 않음
-// 예제들 살펴보니 자기가 짜기 나름임 -> query 내에서 처리하는 경우도 있고 invoke에서 query를 처리하는 경우도 있음
-// => 이걸 먼저 정의해야할듯?
+// argument definition :
+// query serviceName args...
+//		1. query changeOwner laserInscription originOwnerID newOwnerID newOwnerName
+//		2. query updateDiamond Diamond
+//		3. query setStolen laserInscription ownerID
 func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
 	if len(args) < 1 && len(args) > 2{
 		return shim.Error("Incorrect arguments. Expecting a key")
