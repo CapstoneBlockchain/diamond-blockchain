@@ -755,6 +755,11 @@ public class Controller implements Initializable {
         userCheck2 = false;
         userCheck_Steal=false;
         diaCheck_Steal=false;
+
+        checked_User1="";
+        checked_User2="";
+        checked_Diamond_Steal="";
+        checked_User_Steal="";
     }
 
     public void setLoginInfo(int loginInfo) {
