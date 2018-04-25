@@ -20,8 +20,12 @@ public class Controller implements Initializable {
     private Diamond_DB_ForMidterm myDB;
     private boolean userCheck1;
     private boolean userCheck2;
+    private boolean userCheck_Steal;
+    private boolean diaCheck_Steal;
     private String checked_User1;
     private String checked_User2;
+    private String checked_User_Steal;
+    private String checked_Diamond_Steal;
 
     @FXML
     private TextField text_Deal_User1;
@@ -30,9 +34,16 @@ public class Controller implements Initializable {
     @FXML
     private TextField text_Deal_Diamond;
     @FXML
+    private TextField text_Stealed_User;
+    @FXML
+    private TextField text_Stealed_Diamond;
+
+    @FXML
     public Text text_Popup_Deal_NOK;
     @FXML
     public Text text_Popup_User_NOK;
+    @FXML
+    public Text text_Popup_Steal_NOK;
     @FXML
     public Text text_Popup_User_OK_1stLine;
     @FXML
@@ -47,6 +58,8 @@ public class Controller implements Initializable {
     @FXML
     private Button btn_DealScreen_UserCheck;
     @FXML
+    private Button btn_StealedScreen_UserCheck;
+    @FXML
     private Button btn_Popup_Deal_OK;
     @FXML
     private Button btn_Popup_Deal_NOK;
@@ -54,6 +67,10 @@ public class Controller implements Initializable {
     private Button btn_Popup_User_OK;
     @FXML
     private Button btn_Popup_User_NOK;
+    @FXML
+    private Button btn_Popup_Steal_OK;
+    @FXML
+    private Button btn_Popup_Steal_NOK;
 
     @FXML
     public void mainScreen_Deal(ActionEvent actionEvent) {
@@ -143,6 +160,40 @@ public class Controller implements Initializable {
             primaryStage.setTitle("<감정원> 다이아 감정");
 
             primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void mainScreen_Stealed(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("StealedScreen.fxml"));
+            Parent parent = loader.load();
+
+            Controller controller = loader.getController();
+            controller.setLoginInfo(loginInfo);
+            controller.setMyDB(myDB);
+
+            Scene scene = new Scene(parent);
+
+            if (loginInfo == 0) {
+                Stage primaryStage = (Stage) btn_MainScreen_Deal_Appraise.getScene().getWindow();
+                primaryStage.close();
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("<감정원> 도난 신고");
+
+                primaryStage.show();
+            } else {
+                Stage primaryStage = (Stage) btn_MainScreen_Deal_Sales.getScene().getWindow();
+                primaryStage.close();
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("<판매소> 도난 신고");
+
+                primaryStage.show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -246,8 +297,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
                 controller.setMyDB(myDB);
+                controller.setLoginInfo(loginInfo);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_DealScreen_UserCheck.getScene().getWindow();
@@ -350,6 +401,203 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void stealedScreen_UserCheck(){
+        try {
+            if (myDB.checkUser(text_Stealed_User.getText())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_User_OK.fxml"));
+                Parent parent = loader.load();
+
+                Stage primaryStage = new Stage();
+
+                Controller controller = loader.getController();
+                controller.text_Popup_User_OK_1stLine.setText("다이아의 소유자 정보");
+
+                checked_User_Steal = text_Stealed_User.getText();
+                userCheck_Steal=true;
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 완료");
+
+                primaryStage.show();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_User_NOK.fxml"));
+                Parent parent = loader.load();
+
+                Stage primaryStage = new Stage();
+
+                Controller controller = loader.getController();
+                controller.text_Popup_User_NOK.setText("※해당 ID는 존재하지 않습니다.");
+                controller.text_Popup_User_NOK_1stLine.setText("다이아의 소유자 정보");
+
+                userCheck_Steal=false;
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 실패");
+
+                primaryStage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void stealedScreen_DiaCheck(){
+        try {
+            if (myDB.checkDia_Lookup(text_Stealed_Diamond.getText())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Lookup_OK.fxml"));
+                Parent parent = loader.load();
+
+                Stage primaryStage = new Stage();
+
+                diaCheck_Steal=true;
+                checked_Diamond_Steal = text_Stealed_Diamond.getText();
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 완료");
+
+                primaryStage.show();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Lookup_NOK.fxml"));
+                Parent parent = loader.load();
+
+                Stage primaryStage = new Stage();
+
+                Controller_Lookup controller = loader.getController();
+                controller.text_Popup_Lookup_NOK.setText("※해당 다이아는 존재하지 않습니다.");
+
+                diaCheck_Steal=false;
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("조회 실패");
+
+                primaryStage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void stealedScreen_ReturnBack(){
+        try {
+            if (loginInfo == 0) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
+                Parent parent = loader.load();
+
+                Controller controller = loader.getController();
+                controller.setLoginInfo(loginInfo);
+                controller.setMyDB(myDB);
+
+                Scene scene = new Scene(parent);
+                Stage primaryStage = (Stage) btn_StealedScreen_UserCheck.getScene().getWindow();
+                primaryStage.close();
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("<감정원> 메인화면");
+
+                primaryStage.show();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Sales.fxml"));
+                Parent parent = loader.load();
+
+                Controller controller = loader.getController();
+                controller.setMyDB(myDB);
+                controller.setLoginInfo(loginInfo);
+
+                Scene scene = new Scene(parent);
+                Stage primaryStage = (Stage) btn_StealedScreen_UserCheck.getScene().getWindow();
+                primaryStage.close();
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("<판매소> 메인화면");
+
+                primaryStage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void stealedScreen_Complain(){
+        if (!checked_User_Steal.equals(text_Stealed_User.getText())) {
+            userCheck_Steal = false;
+        }
+        if (!checked_Diamond_Steal.equals(text_Stealed_Diamond.getText())) {
+            diaCheck_Steal = false;
+        }
+        String message = "";
+        boolean check = false;
+        try {
+            if (userCheck_Steal && diaCheck_Steal) {
+                if (myDB.checkDia_Deal_Owner(text_Stealed_User.getText(), text_Stealed_Diamond.getText())) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Steal_OK.fxml"));
+                    Parent parent = loader.load();
+
+                    Controller controller = loader.getController();
+                    controller.setLoginInfo(loginInfo);
+                    controller.setMyDB(myDB);
+
+                    Scene scene = new Scene(parent);
+                    Stage primaryStage = (Stage) btn_StealedScreen_UserCheck.getScene().getWindow();
+                    primaryStage.close();
+
+                    primaryStage.setScene(scene);
+                    primaryStage.setTitle("도난 신고 완료!");
+
+                    primaryStage.show();
+
+                    myDB.getDia_Lookup(text_Stealed_Diamond.getText()).setStealed();
+
+                    check = true;
+                } else {
+                    // 소유자와 다이아 정보 일치X
+                    message = "※해당 다이아를 소유하고 있지 않습니다.";
+                }
+
+            } else if (userCheck_Steal) {
+                // 다이아 체크 안됨.
+                message = "※다이아몬드 조회를 해주세요.";
+            } else if (diaCheck_Steal) {
+                // 소유자 체크 안됨.
+                message = "※소유자 조회를 해주세요.";
+            } else {
+                // 둘 다 안됨.
+                message = "※조회를 진행해주세요.";
+
+            }
+
+            if (!check) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Steal_NOK.fxml"));
+                Parent parent = loader.load();
+
+                Controller controller = loader.getController();
+                controller.text_Popup_Steal_NOK.setText(message);
+
+                Scene scene = new Scene(parent);
+
+                Stage primaryStage = new Stage();
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("도난 신고 실패");
+
+                primaryStage.show();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     public void popup_Deal_OK(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) btn_Popup_Deal_OK.getScene().getWindow();
         primaryStage.close();
@@ -408,6 +656,52 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    public void popup_Steal_OK(ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) btn_Popup_Steal_OK.getScene().getWindow();
+        primaryStage.close();
+
+        try {
+            if (loginInfo == 0) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
+                Parent parent = loader.load();
+
+                Controller controller = loader.getController();
+                controller.setMyDB(myDB);
+                controller.setLoginInfo(loginInfo);
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("<감정원> 메인화면");
+
+                primaryStage.show();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Sales.fxml"));
+                Parent parent = loader.load();
+
+                Controller controller = loader.getController();
+                controller.setMyDB(myDB);
+                controller.setLoginInfo(loginInfo);
+
+                Scene scene = new Scene(parent);
+
+                primaryStage.setScene(scene);
+                primaryStage.setTitle("<판매소> 메인화면");
+
+                primaryStage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void popup_Steal_NOK(ActionEvent actionEvent) {
+        Stage primaryStage = (Stage) btn_Popup_Steal_NOK.getScene().getWindow();
+        primaryStage.close();
+    }
+
+    @FXML
     public void login_Appraise(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
@@ -459,6 +753,8 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         userCheck1 = false;
         userCheck2 = false;
+        userCheck_Steal=false;
+        diaCheck_Steal=false;
     }
 
     public void setLoginInfo(int loginInfo) {
