@@ -71,20 +71,21 @@ func setGirdleThickness(minT string, maxT string) girdleThickness  {
 // argument definition :
 // instantiate or upgrade
 func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
+	fmt.Println("DiamondChaincode.go Intialization!!")
 	// Get the args from the transaction proposal
-	args := stub.GetStringArgs()
-	if len(args) != 2 {
-		return shim.Error("Incorrect arguments. Expecting a key and a value")
-	}
+	//args := stub.GetStringArgs()
+	//if len(args) != 2 {
+	//	return shim.Error("Incorrect arguments. Expecting a key and a value")
+	//}
 
-	// Set up any variables or assets here by calling stub.PutState()
-
-
-	// We store the key and the value on the ledger
-	err := stub.PutState(args[0], []byte(args[1]))
-	if err != nil {
-		return shim.Error(fmt.Sprintf("Failed to create asset: %s", args[0]))
-	}
+	//// Set up any variables or assets here by calling stub.PutState()
+	//
+	//
+	//// We store the key and the value on the ledger
+	//err := stub.PutState(args[0], []byte(args[1]))
+	//if err != nil {
+	//	return shim.Error(fmt.Sprintf("Failed to create asset: %s", args[0]))
+	//}
 	return shim.Success(nil)
 }
 
@@ -253,29 +254,6 @@ func setTheft(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	}
 
 	return shim.Success(bDiamond)
-}
-
-// query modify user information of specified diamond key
-//
-// no argument, this function is used to init function for initialize chaincode
-// or get history of key data change
-// argument definition :
-// query serviceName args...
-//		1. query changeOwner laserInscription originOwnerID newOwnerID newOwnerName
-//		2. query updateDiamond Diamond
-//		3. query setStolen laserInscription ownerID
-func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
-	if len(args) < 1 && len(args) > 2{
-		return shim.Error("Incorrect arguments. Expecting a key")
-	}
-
-	var err error
-	_, err = get(stub, args)
-	if err != nil {
-		return shim.Error("this key don't exist in ledger")
-	}
-
-	return shim.Error("this is function not defined")
 }
 
 // TODO : new diamond register
