@@ -9,46 +9,49 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <HBox prefHeight="80.0" prefWidth="200.0" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true">
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
+            <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url = "@resource/deal.png"/>
+                  <Image url="@resource/steal.png" />
                </image>
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
             </ImageView>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="CENTER_LEFT" maxHeight="150.0" maxWidth="250.0" minWidth="250.0" prefHeight="150.0" prefWidth="250.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아의 소유자 정보가">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 도난신고 진행에">
                      <font>
-                        <Font name="Gulim" size="17.0" />
+                        <Font name="Gulim" size="18.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="성공적으로 변경되었습니다.">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="성공하였습니다.">
                      <font>
-                        <Font name="Gulim" size="17.0" />
+                        <Font name="Gulim" size="18.0" />
                      </font>
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                   </Text>
                </children>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </VBox>
          </children>
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btn_Popup_Deal_OK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" text="확인" onAction="#popup_Deal_OK">
+            <Button fx:id="btn_StealedScreen_Popup_OK" minHeight="32.0" minWidth="55.0" mnemonicParsing="false" onAction="#stealedScreen_Popup_OK_OK" text="확인">
                <font>
                   <Font name="Gulim" size="14.0" />
                </font>
                <HBox.margin>
-                  <Insets right="15.0" />
+                  <Insets right="17.0" />
                </HBox.margin>
             </Button>
          </children>

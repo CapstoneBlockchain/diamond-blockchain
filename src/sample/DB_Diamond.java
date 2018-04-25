@@ -2,7 +2,8 @@ package sample;
 
 public class DB_Diamond {
     private boolean isStealed;
-    private DB_User user;
+    private String userID;
+    private String userName;
     private String number;
     private String shapeAndCut;
     private String minR;
@@ -19,9 +20,10 @@ public class DB_Diamond {
     private String laserInscription;
     private String date;
 
-    public DB_Diamond(DB_User user, String number, String shapeAndCut,String minR, String maxR, String height, String carat, String color,
+    public DB_Diamond(String userName,String userID, String number, String shapeAndCut,String minR, String maxR, String height, String carat, String color,
                       String clarity, String cut, String tableSize, String totalDepth, String minGirdle, String maxGirdle, String laserInscription,String date) {
-        this.user = user;
+        this.userID = userID;
+        this.userName=userName;
         this.number = number;
         this.shapeAndCut = shapeAndCut;
         this.minR = minR;
@@ -58,10 +60,10 @@ public class DB_Diamond {
     }
 
     public String getUserID(){
-        return user.getUserID();
+        return userID;
     }
     public String getUserName(){
-        return user.getUserName();
+        return userName;
     }
     public String getNumber(){
         return number;
@@ -108,13 +110,16 @@ public class DB_Diamond {
     public String getDate(){
         return date;
     }
-    public void changeOwner(DB_User newOwner){
-        this.user = newOwner;
-    }
+
     public void setStealed(){
         isStealed=true;
     }
     public boolean isStealed(){
         return isStealed;
+    }
+
+    public void changeOwner(String userID,String userName){
+        this.userName = userName;
+        this.userID = userID;
     }
 }

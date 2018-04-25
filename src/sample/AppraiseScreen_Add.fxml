@@ -11,57 +11,33 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller_Appraise">
    <children>
-      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="유저 조회">
-               <font>
-                  <Font name="Gulim" size="18.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin>
-            </Text>
-            <TextField fx:id="text_Appraise_LookupUser" prefHeight="35.0" prefWidth="400.0">
-               <HBox.margin>
-                  <Insets left="70.0" />
-               </HBox.margin>
-            </TextField>
-            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_UserCheck" text="조회">
-               <font>
-                  <Font name="Gulim" size="16.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </Button>
-         </children>
+      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="200.0">
          <VBox.margin>
             <Insets top="20.0" />
          </VBox.margin>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0">
          <children>
             <MenuButton fx:id="menu_Appraise_Add" alignment="CENTER" minHeight="27.0" minWidth="130.0" mnemonicParsing="false" text="항목" textAlignment="CENTER">
               <items>
-                  <MenuItem mnemonicParsing="false" text="Date" onAction="#add_menuitem1"/>
-                  <MenuItem mnemonicParsing="false" text="Number" onAction="#add_menuitem2"/>
-                  <MenuItem mnemonicParsing="false" text="Shape &amp; Cut" onAction="#add_menuitem3"/>
-                  <MenuItem mnemonicParsing="false" text="Min Radius" onAction="#add_menuitem4"/>
-                  <MenuItem mnemonicParsing="false" text="Max Radius" onAction="#add_menuitem5"/>
-                  <MenuItem mnemonicParsing="false" text="Height" onAction="#add_menuitem6"/>
-                  <MenuItem mnemonicParsing="false" text="Carat" onAction="#add_menuitem7"/>
-                  <MenuItem mnemonicParsing="false" text="Color" onAction="#add_menuitem8"/>
-                  <MenuItem mnemonicParsing="false" text="Clarity" onAction="#add_menuitem9"/>
-                  <MenuItem mnemonicParsing="false" text="Cut" onAction="#add_menuitem10"/>
-                  <MenuItem mnemonicParsing="false" text="Table Size" onAction="#add_menuitem11"/>
-                  <MenuItem mnemonicParsing="false" text="Total Depth" onAction="#add_menuitem12"/>
-                  <MenuItem mnemonicParsing="false" text="Min Girdle" onAction="#add_menuitem13"/>
-                  <MenuItem mnemonicParsing="false" text="Max Girdle" onAction="#add_menuitem14"/>
-                  <MenuItem mnemonicParsing="false" text="Laser Inscription" onAction="#add_menuitem15"/>
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem1" text="Date" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem2" text="Number" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem3" text="Shape &amp; Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem4" text="Min Radius" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem5" text="Max Radius" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem6" text="Height" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem7" text="Carat" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem8" text="Color" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem9" text="Clarity" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem10" text="Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem11" text="Table Size" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem12" text="Total Depth" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem13" text="Min Girdle" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem14" text="Max Girdle" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem15" text="Laser Inscription" />
               </items>
                <HBox.margin>
                   <Insets />
@@ -84,8 +60,11 @@
                </HBox.margin>
             </Button>
          </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
       </HBox>
-      <StackPane prefHeight="350.0" prefWidth="200.0">
+      <StackPane prefHeight="370.0" prefWidth="200.0">
          <children>
             <TableView fx:id="myTableView" prefHeight="200.0" prefWidth="200.0">
               <columns>
