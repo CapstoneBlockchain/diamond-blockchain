@@ -8,21 +8,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <HBox prefHeight="50.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
          <VBox.margin>
-            <Insets bottom="100.0" />
+            <Insets bottom="80.0" />
          </VBox.margin>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="기존 소유자 확인">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </Text>
+         </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="소유자 조회">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="기존 소유자">
                <font>
                   <Font name="Gulim" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="text_Stealed_User" prefHeight="35.0" prefWidth="400.0">
+            <TextField fx:id="textfield_StealedScreen_CheckOwner_BasicOwner" prefHeight="35.0" prefWidth="300.0">
                <HBox.margin>
                   <Insets left="40.0" />
                </HBox.margin>
@@ -30,17 +40,8 @@
                   <Font name="Gulim" size="14.0" />
                </font>
             </TextField>
-            <Button fx:id="btn_StealedScreen_UserCheck" minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#stealedScreen_UserCheck" text="조회" textAlignment="CENTER">
-               <font>
-                  <Font name="Gulim" size="16.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </Button>
          </children>
       </HBox>
-      <HBox prefHeight="50.0" prefWidth="200.0" />
       <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 번호">
@@ -48,7 +49,7 @@
                   <Font name="Gulim" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="text_Stealed_Diamond" prefHeight="35.0" prefWidth="400.0">
+            <TextField fx:id="textfield_StealedScreen_CheckOwner_Diamond" prefHeight="35.0" prefWidth="300.0">
                <HBox.margin>
                   <Insets left="40.0" />
                </HBox.margin>
@@ -56,14 +57,6 @@
                   <Font name="Gulim" size="14.0" />
                </font>
             </TextField>
-            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" text="조회" textAlignment="CENTER" onAction="#stealedScreen_DiaCheck">
-               <font>
-                  <Font name="Gulim" size="16.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="35.0" />
-               </HBox.margin>
-            </Button>
          </children>
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="200.0">
@@ -71,10 +64,10 @@
             <Insets />
          </opaqueInsets>
          <VBox.margin>
-            <Insets top="100.0" />
+            <Insets top="80.0" />
          </VBox.margin>
          <children>
-            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#stealedScreen_ReturnBack" text="돌아가기">
+            <Button minHeight="35.0" minWidth="65.0" mnemonicParsing="false" onAction="#stealedScreen_CheckOwner_ReturnBack" text="취소">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
@@ -82,12 +75,12 @@
                   <Insets right="17.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#stealedScreen_Complain" text="신고하기">
+            <Button minHeight="35.0" minWidth="65.0" mnemonicParsing="false" onAction="#stealedScreen_CheckOwner_Lookup" text="조회">
                <font>
                   <Font name="Gulim" size="16.0" />
                </font>
                <HBox.margin>
-                  <Insets right="30.0" />
+                  <Insets right="20.0" />
                </HBox.margin>
             </Button>
          </children>

@@ -15,7 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sample.Model_DiamondData;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,15 +37,15 @@ public class Controller_Lookup implements Initializable {
     @FXML
     private Button btn_LookupScreen_ReturnBack;
     @FXML
-    private Button btn_Popup_Lookup_OK;
+    private Button btn_LookupScreen_Popup_OK;
     @FXML
-    private Button btn_Popup_Lookup_NOK;
+    private Button btn_LookupScreen_Popup_NOK;
 
 
     ObservableList<Model_DiamondData> myList;
 
     @FXML
-    public void lookupScreen_ReturnBack(ActionEvent actionEvent){
+    public void lookupScreen_ReturnBack(){
         try {
             if(loginInfo==0){
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
@@ -91,7 +90,7 @@ public class Controller_Lookup implements Initializable {
     public void lookupScreen_DiaCheck(ActionEvent actionEvent) {
         try {
             if(myDB.checkDia_Lookup(text_Lookup_Diamond.getText())){
-                Parent deal = FXMLLoader.load(getClass().getResource("Popup_Lookup_OK.fxml"));
+                Parent deal = FXMLLoader.load(getClass().getResource("LookupScreen_Popup_OK.fxml"));
                 Scene scene = new Scene(deal);
 
                 Stage primaryStage = new Stage();
@@ -103,7 +102,7 @@ public class Controller_Lookup implements Initializable {
                 listColumn.setCellValueFactory(cellData->cellData.getValue().getList());
                 dataColumn.setCellValueFactory(cellData->cellData.getValue().getData());
 
-                DB_Diamond temp = myDB.getDia_Lookup(text_Lookup_Diamond.getText());
+                DB_Diamond temp = myDB.getDiamond(text_Lookup_Diamond.getText());
                 myList = FXCollections.observableArrayList(
                         new Model_DiamondData(new SimpleStringProperty("Date"),new SimpleStringProperty(temp.getDate())),
                         new Model_DiamondData(new SimpleStringProperty("User Name"),new SimpleStringProperty(temp.getUserName())),
@@ -124,17 +123,13 @@ public class Controller_Lookup implements Initializable {
                         new Model_DiamondData(new SimpleStringProperty("Laser Inscription"),new SimpleStringProperty(temp.getLaserInscription()))
                 );
 
-
                 myTableView.setItems(myList);
             }
             else{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Popup_Lookup_NOK.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LookupScreen_Popup_NOK.fxml"));
                 Parent parent = loader.load();
 
                 Stage primaryStage = new Stage();
-
-                Controller_Lookup controller = loader.getController();
-                controller.text_Popup_Lookup_NOK.setText("※해당 다이아는 존재하지 않습니다.");
 
                 Scene scene = new Scene(parent);
 
@@ -150,14 +145,14 @@ public class Controller_Lookup implements Initializable {
     }
 
     @FXML
-    public void popup_Lookup_OK(ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) btn_Popup_Lookup_OK.getScene().getWindow();
+    public void lookupScreen_Popup_OK_OK() {
+        Stage primaryStage = (Stage) btn_LookupScreen_Popup_OK.getScene().getWindow();
         primaryStage.close();
     }
 
     @FXML
-    public void popup_Lookup_NOK(ActionEvent actionEvent) {
-        Stage primaryStage = (Stage) btn_Popup_Lookup_NOK.getScene().getWindow();
+    public void lookupScreen_Popup_NOK_OK() {
+        Stage primaryStage = (Stage) btn_LookupScreen_Popup_NOK.getScene().getWindow();
         primaryStage.close();
     }
 
