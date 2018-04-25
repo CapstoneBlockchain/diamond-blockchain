@@ -107,10 +107,13 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 		result, err = get(stub, args)
 	// 거래 발생 혹은 감정서 업데이트 혹은 도난 신고
 	} else if fn == "changeOwner"{
-		response = query(stub, args)
+		response = changeOwner(stub, args)
 		return response
 	} else if fn == "setTheft" {
 		response = setTheft(stub, args)
+		return response
+	} else if fn == "updateDiamond" {
+		response = updateDiamond(stub, args)
 		return response
 	} else {
 		return shim.Error(err.Error())
@@ -132,7 +135,32 @@ func changeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if len(args) != 3 {
 		return shim.Error("Incorrect arguments. Expecting a key")
 	}
-	return shim.Success(nil)
+
+	beforeValue, err := stub.GetState(args[0])
+	if err != nil {
+		return shim.Error("Failed to get asset" + args[0])
+	}
+	if beforeValue != nil {
+		return shim.Error("Asset not found" + args[0])
+	}
+
+	var tempDiamond Diamond
+	json.Unmarshal(beforeValue, &tempDiamond)
+
+	tempUserInfo := setUserInfo(args[1], args[2])
+	tempDiamond.userInfo = tempUserInfo
+
+	afterValue ,err := json.Marshal(tempDiamond)
+	if err != nil {
+		return shim.Error("Failed to convert struct to byte")
+	}
+
+	err = stub.PutState(args[0], afterValue)
+	if err != nil {
+		return shim.Error("Failed to set asset: " + args[0])
+	}
+
+	return shim.Success(afterValue)
 }
 
 // TODO : 다이아몬드 감정서 업데이트 함수
@@ -143,7 +171,51 @@ func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response 
 	if len(args) != 17 {
 		return shim.Error("Incorrect arguments. Expecting a key")
 	}
-	return shim.Success(nil)
+
+	beforeValue, err := stub.GetState(args[0])
+	if err != nil {
+		return shim.Error("Failed to get asset" + args[0])
+	}
+	if beforeValue != nil {
+		return shim.Error("Asset not found" + args[0])
+	}
+
+	nUserInfo := setUserInfo(args[0], args[1])
+	nMinR, err := strconv.ParseFloat(args[4], 64)
+	nMaxR, err := strconv.ParseFloat(args[5], 64)
+	nHeight, err := strconv.ParseFloat(args[6], 64)
+	if err != nil {
+		return shim.Error("Failed to set asset: "+args[4]+", "+args[5]+", "+args[6])
+	}
+	nMeasurement := setMeasurement(nMinR, nMaxR, nHeight)
+	nGirdleThickness := setGirdleThickness(args[13], args[14])
+	if err != nil {
+		return shim.Error("Failed to set asset: "+args[13]+", "+args[14])
+	}
+
+	nNumber, err := strconv.Atoi(args[2])
+	ntableSize, err := strconv.Atoi(args[11])
+	ntableDepth, err := strconv.ParseFloat(args[12], 64)
+	if err != nil {
+		return shim.Error("Failed to set asset: "+args[2]+", "+args[11]+", "+args[12])
+	}
+
+	nCarat, err := strconv.ParseFloat(args[7], 64)
+	nCheckTheft, err := strconv.ParseBool(args[16])
+
+	nDiamond := setDiamondInfo(nUserInfo, time.Now(), nNumber, args[3], nMeasurement, nCarat, args[8], args[9], args[10], ntableSize, ntableDepth, nGirdleThickness, args[15], nCheckTheft)
+
+	bDiamond, err := json.Marshal(nDiamond)
+	if err != nil {
+		return shim.Error("Failed to convert struct to byte")
+	}
+
+	err = stub.PutState(args[15], bDiamond)
+	if err != nil {
+		return shim.Error("Failed to set asset: "+args[0])
+	}
+
+	return shim.Success(bDiamond)
 }
 
 // TODO : 도난 등록 함수
@@ -151,7 +223,36 @@ func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response 
 // arguments definition:
 // setTheft key checkTheft
 func setTheft(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	return shim.Success(nil)
+	if len(args) != 2 {
+		return shim.Error("Incorrect arguments. Expecting a key")
+	}
+
+	beforeValue, err := stub.GetState(args[0])
+	if err != nil {
+		return shim.Error("Failed to get asset" + args[0])
+	}
+	if beforeValue != nil {
+		return shim.Error("Asset not found" + args[0])
+	}
+
+	var tempDiamond Diamond
+	json.Unmarshal(beforeValue, &tempDiamond)
+
+	nCheckTheft, err := strconv.ParseBool(args[1])
+
+	tempDiamond.checkTheft = nCheckTheft
+
+	bDiamond, err := json.Marshal(tempDiamond)
+	if err != nil {
+		return shim.Error("Failed to convert struct to byte")
+	}
+
+	err = stub.PutState(args[0], bDiamond)
+	if err != nil {
+		return shim.Error("Failed to set asset: "+args[0])
+	}
+
+	return shim.Success(bDiamond)
 }
 
 // query modify user information of specified diamond key
@@ -219,7 +320,7 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Failed to convert struct to byte")
 	}
 
-	err = stub.PutState(args[15], []byte(string(bDiamond)))
+	err = stub.PutState(args[15], bDiamond)
 	if err != nil {
 		return "", fmt.Errorf("Failed to set asset: %s", args[0])
 	}
