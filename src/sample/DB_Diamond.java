@@ -1,6 +1,7 @@
 package sample;
 
 public class DB_Diamond {
+    private boolean isStealed;
     private DB_User user;
     private String number;
     private String shapeAndCut;
@@ -36,6 +37,7 @@ public class DB_Diamond {
         this.maxGirdle = maxGirdle;
         this.laserInscription = laserInscription;
         this.date = date;
+        this.isStealed=false;
     }
 
     public void modifyData(String number, String shapeAndCut, String minR, String maxR, String height, String carat, String color, String clarity,
@@ -108,5 +110,11 @@ public class DB_Diamond {
     }
     public void changeOwner(DB_User newOwner){
         this.user = newOwner;
+    }
+    public void setStealed(){
+        isStealed=true;
+    }
+    public boolean isStealed(){
+        return isStealed;
     }
 }
