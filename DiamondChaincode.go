@@ -14,29 +14,40 @@ pb "github.com/hyperledger/fabric/protos/peer"
 type DiamondChaincode struct {}
 
 type userInfo struct {
-	name string
-	ID string
+	name string 					`json:"userName"`
+	ID string 						`json:"userID"`
+}
+
+type measurement struct {
+	minR float64					`json:"minR"`
+	maxR float64					`json:"maxR"`
+	height float64					`json:"height"`
+}
+
+type girdleThickness struct {
+	minT string						`json:"minT"`
+	maxT string						`json:"maxT"`
 }
 
 type Diamond struct {
-	date time.Time
-	number int
-	shapeAndCut string
-	measurement [3]float64
-	carat float64
-	color string
-	clarity string
-	cut string
-	tableSize int
-	totalDepth float64
-	girdleThickness [2]string
-	laserInscription string
+	date time.Time 					`json:"createTime"`
+	number int 						`json:"registerNumber"`
+	shapeAndCut string 				`json:"shapeAndCut"`
+	measurement measurement
+	carat float64 					`json:"carat"`
+	color string 					`json:"color"`
+	clarity string					`json:"clarity"`
+	cut string						`json:"cut"`
+	tableSize int					`json:"tableSize"`
+	totalDepth float64				`json:"totalDepth"`
+	girdleThickness girdleThickness	`json:"girdleThickness"`
+	laserInscription string			`json:"laserInscription"`
 	userInfo userInfo
-	checkTheft bool
+	checkTheft bool					`json:"checkTheft"`
 }
 
 // set Diamond data
-func setDiamondInfo(aUserInfo userInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement [3]float64, aCarat float64, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth float64, aGirdleThickness [2]string, aLaserInscription string, aCheckTheft bool) Diamond {
+func setDiamondInfo(aUserInfo userInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement measurement, aCarat float64, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth float64, aGirdleThickness girdleThickness, aLaserInscription string, aCheckTheft bool) Diamond {
 	rDiamond := Diamond{userInfo: aUserInfo, date: aDate, number: aNumber, shapeAndCut: aShapeAndCut, measurement:aMeasurement, carat:aCarat, color:aColor, clarity:aClarity, cut:aCut, tableSize:aTableSize, totalDepth:aTotalDepth, girdleThickness:aGirdleThickness, laserInscription:aLaserInscription, checkTheft:aCheckTheft}
 	return rDiamond
 }
@@ -44,12 +55,12 @@ func setUserInfo(aName string, aID string) userInfo {
 	rUserInfo := userInfo{name:aName, ID:aID}
 	return rUserInfo
 }
-func setMeasurement(minR float64, maxR float64, height float64) [3]float64 {
-	rMeasurement := [3]float64{minR, maxR, height}
+func setMeasurement(minR float64, maxR float64, height float64) measurement {
+	rMeasurement := measurement{minR, maxR, height}
 	return rMeasurement
 }
-func setGirdleThickness(minT string, maxT string) [2]string  {
-	rGirdleThickness := [2]string{minT, maxT}
+func setGirdleThickness(minT string, maxT string) girdleThickness  {
+	rGirdleThickness := girdleThickness{minT, maxT}
 	return rGirdleThickness
 }
 
@@ -58,7 +69,7 @@ func setGirdleThickness(minT string, maxT string) [2]string  {
 // or to migrate data.
 //
 // argument definition :
-// key
+// instantiate or upgrade
 func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	// Get the args from the transaction proposal
 	args := stub.GetStringArgs()
@@ -67,6 +78,7 @@ func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	}
 
 	// Set up any variables or assets here by calling stub.PutState()
+
 
 	// We store the key and the value on the ledger
 	err := stub.PutState(args[0], []byte(args[1]))
@@ -85,6 +97,7 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 
 	var result string
 	var err error
+	var response pb.Response
 
 	// 새 다이아몬드 추가
 	if fn == "set" {
@@ -93,8 +106,11 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 	} else if fn == "get"{ // assume 'get' even if fn is nil
 		result, err = get(stub, args)
 	// 거래 발생 혹은 감정서 업데이트 혹은 도난 신고
-	} else if fn == "query"{
-		response := query(stub, args)
+	} else if fn == "changeOwner"{
+		response = query(stub, args)
+		return response
+	} else if fn == "setTheft" {
+		response = setTheft(stub, args)
 		return response
 	} else {
 		return shim.Error(err.Error())
@@ -108,24 +124,33 @@ func (t *DiamondChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 	return shim.Success([]byte(result))
 }
 
-// TODO : 새 다이아몬드 등록 함수
-func registerNewDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	return shim.Success(nil)
-}
-
 // TODO : 다이아몬드 거래 반영 함수
+//
+// argument definition :
+// changeOwner key username userID
 func changeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	if len(args) != 3 {
+		return shim.Error("Incorrect arguments. Expecting a key")
+	}
 	return shim.Success(nil)
 }
 
 // TODO : 다이아몬드 감정서 업데이트 함수
+//
+// argument definition :
+// updateDiamond username userID number shapeandcut minR maxR height carat color clarity cut tablesize totaldepth mingirdle maxgirdle laserinscription checkTheft
 func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	if len(args) != 17 {
+		return shim.Error("Incorrect arguments. Expecting a key")
+	}
 	return shim.Success(nil)
 }
 
 // TODO : 도난 등록 함수
+//
 // arguments definition:
-func setStolen(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+// setTheft key checkTheft
+func setTheft(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	return shim.Success(nil)
 }
 
@@ -152,6 +177,7 @@ func query(stub shim.ChaincodeStubInterface, args []string) pb.Response{
 	return shim.Error("this is function not defined")
 }
 
+// TODO : new diamond register
 // Set stores the asset (both key and value) on the ledger. If the key exists,
 // it will override the value with the new one
 // diamond information initialize
@@ -193,7 +219,7 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Failed to convert struct to byte")
 	}
 
-	err = stub.PutState(args[0], []byte(string(bDiamond)))
+	err = stub.PutState(args[15], []byte(string(bDiamond)))
 	if err != nil {
 		return "", fmt.Errorf("Failed to set asset: %s", args[0])
 	}
