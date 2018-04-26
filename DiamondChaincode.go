@@ -303,7 +303,9 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Failed to set asset: %s", args[0])
 	}
 
-	fmt.Printf("Success"+string(bDiamond))
+	var temp Diamond
+	json.Unmarshal(bDiamond, &temp)
+	fmt.Printf("Success"+temp.laserInscription)
 	return string(bDiamond), nil
 }
 
@@ -324,7 +326,9 @@ func get(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Asset not found: %s", args[0])
 	}
 
-	fmt.Printf("Success"+string(value))
+	var temp Diamond
+	json.Unmarshal(value, &temp)
+	fmt.Printf("Success"+temp.laserInscription)
 	return string(value), nil
 }
 
