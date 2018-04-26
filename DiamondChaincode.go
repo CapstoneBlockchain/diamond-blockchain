@@ -1,4 +1,4 @@
-package Diamond
+package main
 
 import (
 "fmt"
