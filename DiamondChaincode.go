@@ -303,6 +303,7 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Failed to set asset: %s", args[0])
 	}
 
+	fmt.Printf("Success"+string(bDiamond))
 	return string(bDiamond), nil
 }
 
@@ -322,6 +323,8 @@ func get(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	if value == nil {
 		return "", fmt.Errorf("Asset not found: %s", args[0])
 	}
+
+	fmt.Printf("Success"+string(value))
 	return string(value), nil
 }
 
