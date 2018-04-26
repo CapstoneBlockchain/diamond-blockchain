@@ -13,54 +13,54 @@ pb "github.com/hyperledger/fabric/protos/peer"
 // Diamond implements a simple chaincode to manage an asset
 type DiamondChaincode struct {}
 
-type userInfo struct {
-	name string 					`json:"userName"`
+type UserInfo struct {
+	Name string 					`json:"userName"`
 	ID string 						`json:"userID"`
 }
 
-type measurement struct {
-	minR float64					`json:"minR"`
-	maxR float64					`json:"maxR"`
-	height float64					`json:"height"`
+type Measurement struct {
+	MinR float64					`json:"minR"`
+	MaxR float64					`json:"maxR"`
+	Height float64					`json:"height"`
 }
 
-type girdleThickness struct {
-	minT string						`json:"minT"`
-	maxT string						`json:"maxT"`
+type GirdleThickness struct {
+	MinT string						`json:"minT"`
+	MaxT string						`json:"maxT"`
 }
 
 type Diamond struct {
-	date time.Time 					`json:"createTime"`
-	number int 						`json:"registerNumber"`
-	shapeAndCut string 				`json:"shapeAndCut"`
-	measurement measurement
-	carat float64 					`json:"carat"`
-	color string 					`json:"color"`
-	clarity string					`json:"clarity"`
-	cut string						`json:"cut"`
-	tableSize int					`json:"tableSize"`
-	totalDepth float64				`json:"totalDepth"`
-	girdleThickness girdleThickness	`json:"girdleThickness"`
-	laserInscription string			`json:"laserInscription"`
-	userInfo userInfo
-	checkTheft bool					`json:"checkTheft"`
+	Date             time.Time 					`json:"createTime"`
+	Number           int 						`json:"registerNumber"`
+	ShapeAndCut      string 				`json:"shapeAndCut"`
+	Measurement      Measurement
+	Carat            float64 					`json:"carat"`
+	Color            string 					`json:"color"`
+	Clarity          string					`json:"clarity"`
+	Cut              string						`json:"cut"`
+	TableSize        int					`json:"tableSize"`
+	TotalDepth       float64				`json:"totalDepth"`
+	GirdleThickness  GirdleThickness	`json:"girdleThickness"`
+	LaserInscription string			`json:"laserInscription"`
+	UserInfo         UserInfo
+	CheckTheft       bool					`json:"checkTheft"`
 }
 
 // set Diamond data
-func setDiamondInfo(aUserInfo userInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement measurement, aCarat float64, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth float64, aGirdleThickness girdleThickness, aLaserInscription string, aCheckTheft bool) Diamond {
-	rDiamond := Diamond{userInfo: aUserInfo, date: aDate, number: aNumber, shapeAndCut: aShapeAndCut, measurement:aMeasurement, carat:aCarat, color:aColor, clarity:aClarity, cut:aCut, tableSize:aTableSize, totalDepth:aTotalDepth, girdleThickness:aGirdleThickness, laserInscription:aLaserInscription, checkTheft:aCheckTheft}
+func setDiamondInfo(aUserInfo UserInfo, aDate time.Time, aNumber int, aShapeAndCut string, aMeasurement Measurement, aCarat float64, aColor string, aClarity string, aCut string, aTableSize int, aTotalDepth float64, aGirdleThickness GirdleThickness, aLaserInscription string, aCheckTheft bool) Diamond {
+	rDiamond := Diamond{UserInfo: aUserInfo, Date: aDate, Number: aNumber, ShapeAndCut: aShapeAndCut, Measurement:aMeasurement, Carat:aCarat, Color:aColor, Clarity:aClarity, Cut:aCut, TableSize:aTableSize, TotalDepth:aTotalDepth, GirdleThickness:aGirdleThickness, LaserInscription:aLaserInscription, CheckTheft:aCheckTheft}
 	return rDiamond
 }
-func setUserInfo(aName string, aID string) userInfo {
-	rUserInfo := userInfo{name:aName, ID:aID}
+func setUserInfo(aName string, aID string) UserInfo {
+	rUserInfo := UserInfo{Name:aName, ID:aID}
 	return rUserInfo
 }
-func setMeasurement(minR float64, maxR float64, height float64) measurement {
-	rMeasurement := measurement{minR, maxR, height}
+func setMeasurement(minR float64, maxR float64, height float64) Measurement {
+	rMeasurement := Measurement{minR, maxR, height}
 	return rMeasurement
 }
-func setGirdleThickness(minT string, maxT string) girdleThickness  {
-	rGirdleThickness := girdleThickness{minT, maxT}
+func setGirdleThickness(minT string, maxT string) GirdleThickness  {
+	rGirdleThickness := GirdleThickness{minT, maxT}
 	return rGirdleThickness
 }
 
@@ -71,7 +71,11 @@ func setGirdleThickness(minT string, maxT string) girdleThickness  {
 // argument definition :
 // instantiate or upgrade
 func (t *DiamondChaincode) Init(stub shim.ChaincodeStubInterface) pb.Response {
-	fmt.Println("DiamondChaincode.go Intialization!!")
+	//fn, args := stub.GetFunctionAndParameters()
+
+	//if fn == "upgrade" {
+	//
+	//}
 	// Get the args from the transaction proposal
 	//args := stub.GetStringArgs()
 	//if len(args) != 2 {
@@ -149,7 +153,7 @@ func changeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	json.Unmarshal(beforeValue, &tempDiamond)
 
 	tempUserInfo := setUserInfo(args[1], args[2])
-	tempDiamond.userInfo = tempUserInfo
+	tempDiamond.UserInfo = tempUserInfo
 
 	afterValue ,err := json.Marshal(tempDiamond)
 	if err != nil {
@@ -241,7 +245,7 @@ func setTheft(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	nCheckTheft, err := strconv.ParseBool(args[1])
 
-	tempDiamond.checkTheft = nCheckTheft
+	tempDiamond.CheckTheft = nCheckTheft
 
 	bDiamond, err := json.Marshal(tempDiamond)
 	if err != nil {
@@ -305,7 +309,7 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 
 	var temp Diamond
 	json.Unmarshal(bDiamond, &temp)
-	fmt.Printf("Success"+temp.laserInscription)
+	fmt.Printf("Success"+temp.LaserInscription)
 	return string(bDiamond), nil
 }
 
@@ -328,7 +332,7 @@ func get(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 
 	var temp Diamond
 	json.Unmarshal(value, &temp)
-	fmt.Printf("Success"+temp.laserInscription)
+	fmt.Printf("Success"+temp.LaserInscription)
 	return string(value), nil
 }
 
