@@ -145,7 +145,7 @@ func changeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if err != nil {
 		return shim.Error("Failed to get asset" + args[0])
 	}
-	if beforeValue != nil {
+	if beforeValue == nil {
 		return shim.Error("Asset not found" + args[0])
 	}
 
@@ -181,7 +181,7 @@ func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response 
 	if err != nil {
 		return shim.Error("Failed to get asset" + args[0])
 	}
-	if beforeValue != nil {
+	if beforeValue == nil {
 		return shim.Error("Asset not found" + args[0])
 	}
 
@@ -236,7 +236,7 @@ func setTheft(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if err != nil {
 		return shim.Error("Failed to get asset" + args[0])
 	}
-	if beforeValue != nil {
+	if beforeValue == nil {
 		return shim.Error("Asset not found" + args[0])
 	}
 
@@ -272,6 +272,14 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Incorrect arguments. Expecting a key and a value")
 	}
 
+	duplicatedValue, err := stub.GetState(args[15])
+	if err != nil {
+		return "", fmt.Errorf("Failed to check duplicated data : %s", args[15])
+	}
+	if duplicatedValue != nil {
+		return "", fmt.Errorf("Duplicate value found : %s", args[15])
+	}
+
 	nUserInfo := setUserInfo(args[0], args[1])
 	nMinR, err := strconv.ParseFloat(args[4], 64)
 	nMaxR, err := strconv.ParseFloat(args[5], 64)
@@ -286,8 +294,8 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	}
 
 	nNumber, err := strconv.Atoi(args[2])
-	ntableSize, err := strconv.Atoi(args[11])
-	ntableDepth, err := strconv.ParseFloat(args[12], 64)
+	nTableSize, err := strconv.Atoi(args[11])
+	nTableDepth, err := strconv.ParseFloat(args[12], 64)
 	if err != nil {
 		return "", fmt.Errorf("Failed to set asset: %s, %s, %s", args[2], args[11], args[12])
 	}
@@ -295,7 +303,7 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 	nCarat, err := strconv.ParseFloat(args[7], 64)
 	nCheckTheft, err := strconv.ParseBool(args[16])
 
-	nDiamond := setDiamondInfo(nUserInfo, time.Now(), nNumber, args[3], nMeasurement, nCarat, args[8], args[9], args[10], ntableSize, ntableDepth, nGirdleThickness, args[15], nCheckTheft)
+	nDiamond := setDiamondInfo(nUserInfo, time.Now(), nNumber, args[3], nMeasurement, nCarat, args[8], args[9], args[10], nTableSize, nTableDepth, nGirdleThickness, args[15], nCheckTheft)
 
 	bDiamond, err := json.Marshal(nDiamond)
 	if err != nil {
@@ -322,18 +330,18 @@ func get(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 		return "", fmt.Errorf("Incorrect arguments. Expecting a key")
 	}
 
-	value, err := stub.GetState(args[0])
+	findValue, err := stub.GetState(args[0])
 	if err != nil {
 		return "", fmt.Errorf("Failed to get asset: %s with error: %s", args[0], err)
 	}
-	if value == nil {
+	if findValue == nil {
 		return "", fmt.Errorf("Asset not found: %s", args[0])
 	}
 
 	var temp Diamond
-	json.Unmarshal(value, &temp)
+	json.Unmarshal(findValue, &temp)
 	fmt.Printf("Success"+temp.LaserInscription)
-	return string(value), nil
+	return string(findValue), nil
 }
 
 
