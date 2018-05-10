@@ -177,12 +177,12 @@ func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response 
 		return shim.Error("Incorrect arguments. Expecting a key")
 	}
 
-	beforeValue, err := stub.GetState(args[0])
+	beforeValue, err := stub.GetState(args[15])
 	if err != nil {
-		return shim.Error("Failed to get asset" + args[0])
+		return shim.Error("Failed to get asset" + args[15])
 	}
 	if beforeValue == nil {
-		return shim.Error("Asset not found" + args[0])
+		return shim.Error("Asset not found" + args[15])
 	}
 
 	nUserInfo := setUserInfo(args[0], args[1])
