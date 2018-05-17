@@ -165,6 +165,7 @@ func changeOwner(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 		return shim.Error("Failed to set asset: " + args[0])
 	}
 
+	fmt.Printf("Change owner success "+tempDiamond.LaserInscription +" "+tempDiamond.UserInfo.ID+" "+tempDiamond.UserInfo.Name+" "+tempDiamond.CheckTheft)
 	return shim.Success(afterValue)
 }
 
@@ -220,6 +221,7 @@ func updateDiamond(stub shim.ChaincodeStubInterface, args []string) pb.Response 
 		return shim.Error("Failed to set asset: "+args[0])
 	}
 
+	fmt.Printf("Update success "+nDiamond.LaserInscription +" "+nDiamond.UserInfo.ID+" "+nDiamond.UserInfo.Name+" "+nDiamond.CheckTheft)
 	return shim.Success(bDiamond)
 }
 
@@ -257,6 +259,7 @@ func setTheft(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 		return shim.Error("Failed to set asset: "+args[0])
 	}
 
+	fmt.Printf("SetTheft success "+tempDiamond.LaserInscription +" "+tempDiamond.UserInfo.ID+" "+tempDiamond.UserInfo.Name+" "+tempDiamond.CheckTheft)
 	return shim.Success(bDiamond)
 }
 
@@ -317,7 +320,7 @@ func set(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 
 	var temp Diamond
 	json.Unmarshal(bDiamond, &temp)
-	fmt.Printf("Success"+temp.LaserInscription)
+	fmt.Printf("Set success "+temp.LaserInscription +" "+temp.UserInfo.ID+" "+temp.UserInfo.Name+" "+temp.CheckTheft)
 	return string(bDiamond), nil
 }
 
@@ -340,7 +343,7 @@ func get(stub shim.ChaincodeStubInterface, args []string) (string, error) {
 
 	var temp Diamond
 	json.Unmarshal(findValue, &temp)
-	fmt.Printf("Success"+temp.LaserInscription)
+	fmt.Printf("Get success "+temp.LaserInscription +" "+temp.UserInfo.ID+" "+temp.UserInfo.Name+" "+temp.CheckTheft)
 	return string(findValue), nil
 }
 
