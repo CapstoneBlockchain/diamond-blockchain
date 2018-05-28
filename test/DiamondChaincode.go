@@ -40,7 +40,7 @@ type Diamond struct {
 	Cut              string						`json:"cut"`
 	TableSize        int					`json:"tableSize"`
 	TotalDepth       float64				`json:"totalDepth"`
-	GirdleThickness  GirdleThickness	`json:"girdleThickness"`
+	GirdleThickness  GirdleThickness
 	LaserInscription string			`json:"laserInscription"`
 	UserInfo         UserInfo
 	CheckTheft       bool					`json:"checkTheft"`
