@@ -15,14 +15,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller_Appraise implements Initializable {
     private int loginInfo;
-    private Diamond_DB_ForMidterm myDB;
     private String nowState;
     private Boolean checked;
     private Boolean modified;
+    private String randomDiamond;
 
     private String nowState_Add;
     private Boolean added[] = new Boolean[15];
@@ -73,8 +74,9 @@ public class Controller_Appraise implements Initializable {
     private Button btn_AppraiseScreen_Modify_NOK;
 
 
+    QueryClass myQuery = new QueryClass();
     ObservableList<Model_DiamondData> myList;
-    DB_Diamond updateDia;
+    ArrayList<String> updateDia;
 
 
     @Override
@@ -102,7 +104,7 @@ public class Controller_Appraise implements Initializable {
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -126,7 +128,7 @@ public class Controller_Appraise implements Initializable {
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
             controller.setupNullData();
 
             Scene scene = new Scene(parent);
@@ -151,7 +153,7 @@ public class Controller_Appraise implements Initializable {
 
             Controller controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -299,6 +301,11 @@ public class Controller_Appraise implements Initializable {
     }
 
     @FXML
+    public void appraiseScreen_Update_ForDemo(){
+        text_Appraise_LookupDiamond.setText(randomDiamond);
+    }
+
+    @FXML
     public void appraiseScreen_Update_Update() {
         try {
             if (modified) {
@@ -307,7 +314,7 @@ public class Controller_Appraise implements Initializable {
 
                 Controller_Appraise controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
-                controller.setMyDB(myDB);
+                controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_AppraiseScreen_Update_ReturnBack.getScene().getWindow();
@@ -318,10 +325,12 @@ public class Controller_Appraise implements Initializable {
 
                 primaryStage.show();
 
-                updateDia.modifyData(myList.get(3).getData().getValue(), myList.get(4).getData().getValue(), myList.get(5).getData().getValue(),
-                        myList.get(6).getData().getValue(), myList.get(7).getData().getValue(), myList.get(8).getData().getValue(), myList.get(9).getData().getValue(),
-                        myList.get(10).getData().getValue(), myList.get(11).getData().getValue(), myList.get(12).getData().getValue(), myList.get(13).getData().getValue(),
-                        myList.get(14).getData().getValue(), myList.get(15).getData().getValue());
+                myQuery.updateDiamond(myList.get(1).getData().getValue(),myList.get(2).getData().getValue(),myList.get(3).getData().getValue(),
+                        myList.get(4).getData().getValue(), myList.get(5).getData().getValue(), myList.get(6).getData().getValue(),
+                        myList.get(7).getData().getValue(), myList.get(8).getData().getValue(), myList.get(9).getData().getValue(),
+                        myList.get(10).getData().getValue(), myList.get(11).getData().getValue(), myList.get(12).getData().getValue(),
+                        myList.get(13).getData().getValue(), myList.get(14).getData().getValue(), myList.get(15).getData().getValue(),
+                        myList.get(16).getData().getValue());
             } else {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Popup_Appraise_NOK.fxml"));
                 Parent parent = loader.load();
@@ -348,7 +357,7 @@ public class Controller_Appraise implements Initializable {
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -367,7 +376,7 @@ public class Controller_Appraise implements Initializable {
     @FXML
     public void appraiseScreen_Update_DiaCheck() {
         try {
-            if (myDB.checkDia_Lookup(text_Appraise_LookupDiamond.getText())) {
+            if (myQuery.checkDia_Lookup(text_Appraise_LookupDiamond.getText())) {
                 Parent deal = FXMLLoader.load(getClass().getResource("LookupScreen_Popup_OK.fxml"));
                 Scene scene = new Scene(deal);
 
@@ -382,25 +391,26 @@ public class Controller_Appraise implements Initializable {
                 listColumn.setCellValueFactory(cellData -> cellData.getValue().getList());
                 dataColumn.setCellValueFactory(cellData -> cellData.getValue().getData());
 
-                updateDia = myDB.getDiamond(text_Appraise_LookupDiamond.getText());
+                updateDia = myQuery.getDiamondData(text_Appraise_LookupDiamond.getText());
                 myList = FXCollections.observableArrayList(
-                        new Model_DiamondData(new SimpleStringProperty("Date"), new SimpleStringProperty(updateDia.getDate())),
-                        new Model_DiamondData(new SimpleStringProperty("User Name"), new SimpleStringProperty(updateDia.getUserName())),
-                        new Model_DiamondData(new SimpleStringProperty("User ID"), new SimpleStringProperty(updateDia.getUserID())),
-                        new Model_DiamondData(new SimpleStringProperty("Number"), new SimpleStringProperty(updateDia.getNumber())),
-                        new Model_DiamondData(new SimpleStringProperty("Shape & Cut"), new SimpleStringProperty(updateDia.getShapeAndCut())),
-                        new Model_DiamondData(new SimpleStringProperty("Min Radius"), new SimpleStringProperty(updateDia.getMinR())),
-                        new Model_DiamondData(new SimpleStringProperty("Max Radius"), new SimpleStringProperty(updateDia.getMaxR())),
-                        new Model_DiamondData(new SimpleStringProperty("Height"), new SimpleStringProperty(updateDia.getHeight())),
-                        new Model_DiamondData(new SimpleStringProperty("Carat"), new SimpleStringProperty(updateDia.getCarat())),
-                        new Model_DiamondData(new SimpleStringProperty("Color"), new SimpleStringProperty(updateDia.getColor())),
-                        new Model_DiamondData(new SimpleStringProperty("Clarity"), new SimpleStringProperty(updateDia.getClarity())),
-                        new Model_DiamondData(new SimpleStringProperty("Cut"), new SimpleStringProperty(updateDia.getCut())),
-                        new Model_DiamondData(new SimpleStringProperty("Table Size"), new SimpleStringProperty(updateDia.getTableSize())),
-                        new Model_DiamondData(new SimpleStringProperty("Total Depth"), new SimpleStringProperty(updateDia.getTotalDepth())),
-                        new Model_DiamondData(new SimpleStringProperty("Min Girdle"), new SimpleStringProperty(updateDia.getMinGirdle())),
-                        new Model_DiamondData(new SimpleStringProperty("Max Girdle"), new SimpleStringProperty(updateDia.getMaxGirdle())),
-                        new Model_DiamondData(new SimpleStringProperty("Laser Inscription"), new SimpleStringProperty(updateDia.getLaserInscription()))
+                        new Model_DiamondData(new SimpleStringProperty("Date"), new SimpleStringProperty(updateDia.get(0))),
+                        new Model_DiamondData(new SimpleStringProperty("User Name"), new SimpleStringProperty(updateDia.get(1))),
+                        new Model_DiamondData(new SimpleStringProperty("User ID"), new SimpleStringProperty(updateDia.get(2))),
+                        new Model_DiamondData(new SimpleStringProperty("Number"), new SimpleStringProperty(updateDia.get(3))),
+                        new Model_DiamondData(new SimpleStringProperty("Shape & Cut"), new SimpleStringProperty(updateDia.get(4))),
+                        new Model_DiamondData(new SimpleStringProperty("Min Radius"), new SimpleStringProperty(updateDia.get(5))),
+                        new Model_DiamondData(new SimpleStringProperty("Max Radius"), new SimpleStringProperty(updateDia.get(6))),
+                        new Model_DiamondData(new SimpleStringProperty("Height"), new SimpleStringProperty(updateDia.get(7))),
+                        new Model_DiamondData(new SimpleStringProperty("Carat"), new SimpleStringProperty(updateDia.get(8))),
+                        new Model_DiamondData(new SimpleStringProperty("Color"), new SimpleStringProperty(updateDia.get(9))),
+                        new Model_DiamondData(new SimpleStringProperty("Clarity"), new SimpleStringProperty(updateDia.get(10))),
+                        new Model_DiamondData(new SimpleStringProperty("Cut"), new SimpleStringProperty(updateDia.get(11))),
+                        new Model_DiamondData(new SimpleStringProperty("Table Size"), new SimpleStringProperty(updateDia.get(12))),
+                        new Model_DiamondData(new SimpleStringProperty("Total Depth"), new SimpleStringProperty(updateDia.get(13))),
+                        new Model_DiamondData(new SimpleStringProperty("Min Girdle"), new SimpleStringProperty(updateDia.get(14))),
+                        new Model_DiamondData(new SimpleStringProperty("Max Girdle"), new SimpleStringProperty(updateDia.get(15))),
+                        new Model_DiamondData(new SimpleStringProperty("Laser Inscription"), new SimpleStringProperty(updateDia.get(16))),
+                        new Model_DiamondData(new SimpleStringProperty("Check Theft"), new SimpleStringProperty(updateDia.get(17)))
                 );
                 myTableView.setItems(myList);
             } else {
@@ -423,7 +433,7 @@ public class Controller_Appraise implements Initializable {
 
 
     // TODO : 새로운 다이아 감정 창에서 일어나는 Action들
-    public void setupNullData(){
+    public void setupNullData() {
         listColumn.setCellValueFactory(cellData -> cellData.getValue().getList());
         dataColumn.setCellValueFactory(cellData -> cellData.getValue().getData());
 
@@ -444,11 +454,13 @@ public class Controller_Appraise implements Initializable {
                 new Model_DiamondData(new SimpleStringProperty("Total Depth"), new SimpleStringProperty("")),
                 new Model_DiamondData(new SimpleStringProperty("Min Girdle"), new SimpleStringProperty("")),
                 new Model_DiamondData(new SimpleStringProperty("Max Girdle"), new SimpleStringProperty("")),
-                new Model_DiamondData(new SimpleStringProperty("Laser Inscription"), new SimpleStringProperty(""))
+                new Model_DiamondData(new SimpleStringProperty("Laser Inscription"), new SimpleStringProperty("")),
+                new Model_DiamondData(new SimpleStringProperty("Check Theft"), new SimpleStringProperty(""))
         );
         myTableView.setItems(myList);
 
     }
+
     @FXML
     public void appraiseScreen_Add_Modify() {
         if (nowState_Add.equals("Null")) {
@@ -491,7 +503,7 @@ public class Controller_Appraise implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if (nowState_Add.equals("Laser Inscription") && myDB.checkDia_Lookup(text_Appraise_AddData.getText())) {
+        } else if (nowState_Add.equals("Laser Inscription") && myQuery.checkDia_Lookup(text_Appraise_AddData.getText())) {
             // 다이아 번호 중복
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Popup_Modify_NOK.fxml"));
@@ -604,7 +616,7 @@ public class Controller_Appraise implements Initializable {
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -635,7 +647,7 @@ public class Controller_Appraise implements Initializable {
 
                 Controller_Appraise controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
-                controller.setMyDB(myDB);
+                controller.setMyQuery(myQuery,randomDiamond);
                 controller.setMyList(myList);
 
                 Scene scene = new Scene(parent);
@@ -646,8 +658,7 @@ public class Controller_Appraise implements Initializable {
                 primaryStage.setTitle("소유자 정보 입력");
 
                 primaryStage.show();
-            }
-            else {
+            } else {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Popup_Appraise_NOK.fxml"));
                 Parent parent = loader.load();
 
@@ -665,31 +676,73 @@ public class Controller_Appraise implements Initializable {
         }
     }
 
+    @FXML
+    public void appraiseScreen_Add_ForDemo() {
+        myList.remove(0);
+        myList.add(0, new Model_DiamondData(new SimpleStringProperty("Date"), new SimpleStringProperty("2018/06/01")));
+        myList.remove(3);
+        myList.add(3, new Model_DiamondData(new SimpleStringProperty("Number"), new SimpleStringProperty("80020010")));
+        myList.remove(4);
+        myList.add(4, new Model_DiamondData(new SimpleStringProperty("Shape & Cut"), new SimpleStringProperty("Princess")));
+        myList.remove(5);
+        myList.add(5, new Model_DiamondData(new SimpleStringProperty("Min Radius"), new SimpleStringProperty("6.52")));
+        myList.remove(6);
+        myList.add(6, new Model_DiamondData(new SimpleStringProperty("Max Radius"), new SimpleStringProperty("6.53")));
+        myList.remove(7);
+        myList.add(7, new Model_DiamondData(new SimpleStringProperty("Height"), new SimpleStringProperty("1.00")));
+        myList.remove(8);
+        myList.add(8, new Model_DiamondData(new SimpleStringProperty("Carat"), new SimpleStringProperty("1.03")));
+        myList.remove(9);
+        myList.add(9, new Model_DiamondData(new SimpleStringProperty("Color"), new SimpleStringProperty("E")));
+        myList.remove(10);
+        myList.add(10, new Model_DiamondData(new SimpleStringProperty("Clarity"), new SimpleStringProperty("VVS1")));
+        myList.remove(11);
+        myList.add(11, new Model_DiamondData(new SimpleStringProperty("Cut"), new SimpleStringProperty("Excellent")));
+        myList.remove(12);
+        myList.add(12, new Model_DiamondData(new SimpleStringProperty("Table Size"), new SimpleStringProperty("64")));
+        myList.remove(13);
+        myList.add(13, new Model_DiamondData(new SimpleStringProperty("Total Depth"), new SimpleStringProperty("66.4")));
+        myList.remove(14);
+        myList.add(14, new Model_DiamondData(new SimpleStringProperty("Min Girdle"), new SimpleStringProperty("Thin")));
+        myList.remove(15);
+        myList.add(15, new Model_DiamondData(new SimpleStringProperty("Max Girdle"), new SimpleStringProperty("Medium")));
+        myList.remove(16);
+        myList.add(16, new Model_DiamondData(new SimpleStringProperty("Laser Inscription"), new SimpleStringProperty(randomDiamond)));
+
+        for(int a=0;a<15;a++){
+            added[a]=true;
+        }
+
+        myTableView.setItems(myList);
+    }
+
 
     // TODO : 새로운 다이아 감정에서 입력 이후 새로운 사용자 입력을 위한 화면의 Action들
-    public void setupData(ObservableList<Model_DiamondData> myList){
+    public void setupData(ObservableList<Model_DiamondData> myList) {
         listColumn.setCellValueFactory(cellData -> cellData.getValue().getList());
         dataColumn.setCellValueFactory(cellData -> cellData.getValue().getData());
 
         this.myList = myList;
         myTableView.setItems(myList);
 
-        for(int a=0;a<15;a++){
-            added[a]=true;
+        for (int a = 0; a < 15; a++) {
+            added[a] = true;
         }
     }
-    public void setMyList(ObservableList<Model_DiamondData> myList){
+
+    public void setMyList(ObservableList<Model_DiamondData> myList) {
         this.myList = myList;
     }
+
     @FXML
-    public void appraiseScreen_Add_RegisterOwner_ReturnBack(){
+    public void appraiseScreen_Add_RegisterOwner_ReturnBack() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Add.fxml"));
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
             controller.setupData(myList);
 
             Scene scene = new Scene(parent);
@@ -705,8 +758,9 @@ public class Controller_Appraise implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
-    public void appraiseScreen_Add_RegisterOwner_Register(){
+    public void appraiseScreen_Add_RegisterOwner_Register() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Add_CheckNewOwner.fxml"));
             Parent parent = loader.load();
@@ -719,9 +773,9 @@ public class Controller_Appraise implements Initializable {
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
             controller.setMyList(myList);
-            controller.setNewOwner(myList.get(2).getData().getValue(),myList.get(1).getData().getValue());
+            controller.setNewOwner(myList.get(2).getData().getValue(), myList.get(1).getData().getValue());
 
             Scene scene = new Scene(parent);
             Stage primaryStage = (Stage) textfield_AppraiseScreen_Add_RegisterOwner_NewOwnerID.getScene().getWindow();
@@ -736,21 +790,28 @@ public class Controller_Appraise implements Initializable {
         }
     }
 
+    @FXML
+    public void appraiseScreen_Add_RegisterOwner_ForDemo(){
+        textfield_AppraiseScreen_Add_RegisterOwner_NewOwnerID.setText("9606301478963");
+        textfield_AppraiseScreen_Add_RegisterOwner_NewOwnerName.setText("Jang GunHee");
+    }
+
 
     // TODO : 새로운 사용자 입력을 받은 후, 체크를 하기 위한 화면에서의 Action들
     public void setNewOwner(String id, String name) {
         text_AppraiseScreen_Add_CheckNewOwner_NewID.setText(id);
         text_AppraiseScreen_Add_CheckNewOwner_NewName.setText(name);
     }
+
     @FXML
-    public void appraiseScreen_Add_CheckNewOwner_ReturnBack(){
+    public void appraiseScreen_Add_CheckNewOwner_ReturnBack() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Add_RegisterOwner.fxml"));
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
             controller.setMyList(myList);
 
             Scene scene = new Scene(parent);
@@ -766,16 +827,17 @@ public class Controller_Appraise implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
-    public void appraiseScreen_Add_CheckNewOwner_OK(){
+    public void appraiseScreen_Add_CheckNewOwner_OK() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AppraiseScreen_Add_Complete.fxml"));
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
-            controller.setFinalData(myList.get(2).getData().getValue(),myList.get(1).getData().getValue(),myList.get(16).getData().getValue());
+            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setFinalData(myList.get(2).getData().getValue(), myList.get(1).getData().getValue(), myList.get(16).getData().getValue());
 
             Scene scene = new Scene(parent);
             Stage primaryStage = (Stage) text_AppraiseScreen_Add_CheckNewOwner_NewID.getScene().getWindow();
@@ -786,7 +848,7 @@ public class Controller_Appraise implements Initializable {
 
             primaryStage.show();
 
-            myDB.addData(myList.get(1).getData().getValue(),myList.get(2).getData().getValue(), myList.get(3).getData().getValue(), myList.get(4).getData().getValue(), myList.get(5).getData().getValue(),
+            myQuery.setNewDiamond(myList.get(1).getData().getValue(), myList.get(2).getData().getValue(), myList.get(3).getData().getValue(), myList.get(4).getData().getValue(), myList.get(5).getData().getValue(),
                     myList.get(6).getData().getValue(), myList.get(7).getData().getValue(), myList.get(8).getData().getValue(), myList.get(9).getData().getValue(),
                     myList.get(10).getData().getValue(), myList.get(11).getData().getValue(), myList.get(12).getData().getValue(), myList.get(13).getData().getValue(),
                     myList.get(14).getData().getValue(), myList.get(15).getData().getValue(), myList.get(16).getData().getValue(), myList.get(0).getData().getValue());
@@ -797,20 +859,21 @@ public class Controller_Appraise implements Initializable {
 
 
     // TODO : 새로운 다이아 등록 마무리 화면
-    public void setFinalData(String newID, String newName,String diamond) {
+    public void setFinalData(String newID, String newName, String diamond) {
         text_AppraiseScreen_Add_Complete_NewID.setText(newID);
         text_AppraiseScreen_Add_Complete_NewName.setText(newName);
         text_AppraiseScreen_Add_Complete_Diamond.setText(diamond);
     }
+
     @FXML
-    public void appraiseScreen_Add_Complete_OK(){
+    public void appraiseScreen_Add_Complete_OK() {
         try {
             if (loginInfo == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen_Appraise.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyDB(myDB);
+                controller.setMyQuery(myQuery,randomDiamond);
                 controller.setLoginInfo(loginInfo);
 
                 Scene scene = new Scene(parent);
@@ -827,7 +890,7 @@ public class Controller_Appraise implements Initializable {
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
-                controller.setMyDB(myDB);
+                controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) text_AppraiseScreen_Add_Complete_NewID.getScene().getWindow();
@@ -855,7 +918,7 @@ public class Controller_Appraise implements Initializable {
 
             Controller controller = loader.getController();
             controller.setLoginInfo(loginInfo);
-            controller.setMyDB(myDB);
+            controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -1049,8 +1112,9 @@ public class Controller_Appraise implements Initializable {
         menu_Appraise_Add.setText(nowState_Add);
     }
 
-    public void setMyDB(Diamond_DB_ForMidterm myDB) {
-        this.myDB = myDB;
+    public void setMyQuery(QueryClass myQuery,String randomDiamond) {
+        this.myQuery = myQuery;
+        this.randomDiamond = randomDiamond;
     }
 
 }

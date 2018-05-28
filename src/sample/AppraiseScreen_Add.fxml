@@ -87,6 +87,11 @@
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <Button fx:id="btn_AppraiseScreen_Add_ForDemo" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="For Demo" onAction="#appraiseScreen_Add_ForDemo">
+                     <HBox.margin>
+                        <Insets right="520.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button fx:id="btn_AppraiseScreen_Add_ReturnBack" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_ReturnBack" text="돌아가기">
                      <font>
                         <Font name="Gulim" size="16.0" />

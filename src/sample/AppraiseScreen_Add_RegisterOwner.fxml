@@ -67,6 +67,11 @@
             <Insets top="80.0" />
          </VBox.margin>
          <children>
+            <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="For Demo" onAction="#appraiseScreen_Add_RegisterOwner_ForDemo">
+               <HBox.margin>
+                  <Insets right="250.0" />
+               </HBox.margin>
+            </Button>
             <Button minHeight="35.0" minWidth="65.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_RegisterOwner_ReturnBack" text="취소">
                <font>
                   <Font name="Gulim" size="16.0" />

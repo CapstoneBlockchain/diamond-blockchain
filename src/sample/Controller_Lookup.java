@@ -18,16 +18,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller_Lookup implements Initializable {
     private int loginInfo;
-    private Diamond_DB_ForMidterm myDB;
+    private String randomDiamond;
 
     @FXML
     private TextField text_Lookup_Diamond;
-    @FXML
-    public Text text_Popup_Lookup_NOK;
     @FXML
     private TableView<Model_DiamondData> myTableView;
     @FXML
@@ -43,6 +42,12 @@ public class Controller_Lookup implements Initializable {
 
 
     ObservableList<Model_DiamondData> myList;
+    QueryClass myQuery = new QueryClass();
+
+    @FXML
+    public void lookupScreen_forDemo(){
+        text_Lookup_Diamond.setText(randomDiamond);
+    }
 
     @FXML
     public void lookupScreen_ReturnBack(){
@@ -53,7 +58,7 @@ public class Controller_Lookup implements Initializable {
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
-                controller.setMyDB(myDB);
+                controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_LookupScreen_ReturnBack.getScene().getWindow();
@@ -70,7 +75,7 @@ public class Controller_Lookup implements Initializable {
 
                 Controller controller = loader.getController();
                 controller.setLoginInfo(loginInfo);
-                controller.setMyDB(myDB);
+                controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) btn_LookupScreen_ReturnBack.getScene().getWindow();
@@ -89,7 +94,7 @@ public class Controller_Lookup implements Initializable {
     @FXML
     public void lookupScreen_DiaCheck(ActionEvent actionEvent) {
         try {
-            if(myDB.checkDia_Lookup(text_Lookup_Diamond.getText())){
+            if(myQuery.checkDia_Lookup(text_Lookup_Diamond.getText())){
                 Parent deal = FXMLLoader.load(getClass().getResource("LookupScreen_Popup_OK.fxml"));
                 Scene scene = new Scene(deal);
 
@@ -102,25 +107,26 @@ public class Controller_Lookup implements Initializable {
                 listColumn.setCellValueFactory(cellData->cellData.getValue().getList());
                 dataColumn.setCellValueFactory(cellData->cellData.getValue().getData());
 
-                DB_Diamond temp = myDB.getDiamond(text_Lookup_Diamond.getText());
+                ArrayList<String> temp = myQuery.getDiamondData(text_Lookup_Diamond.getText());
                 myList = FXCollections.observableArrayList(
-                        new Model_DiamondData(new SimpleStringProperty("Date"),new SimpleStringProperty(temp.getDate())),
-                        new Model_DiamondData(new SimpleStringProperty("User Name"),new SimpleStringProperty(temp.getUserName())),
-                        new Model_DiamondData(new SimpleStringProperty("User ID"),new SimpleStringProperty(temp.getUserID())),
-                        new Model_DiamondData(new SimpleStringProperty("Number"),new SimpleStringProperty(temp.getNumber())),
-                        new Model_DiamondData(new SimpleStringProperty("Shape & Cut"),new SimpleStringProperty(temp.getShapeAndCut())),
-                        new Model_DiamondData(new SimpleStringProperty("Min Radius"),new SimpleStringProperty(temp.getMinR())),
-                        new Model_DiamondData(new SimpleStringProperty("Max Radius"),new SimpleStringProperty(temp.getMaxR())),
-                        new Model_DiamondData(new SimpleStringProperty("Height"),new SimpleStringProperty(temp.getHeight())),
-                        new Model_DiamondData(new SimpleStringProperty("Carat"),new SimpleStringProperty(temp.getCarat())),
-                        new Model_DiamondData(new SimpleStringProperty("Color"),new SimpleStringProperty(temp.getColor())),
-                        new Model_DiamondData(new SimpleStringProperty("Clarity"),new SimpleStringProperty(temp.getClarity())),
-                        new Model_DiamondData(new SimpleStringProperty("Cut"),new SimpleStringProperty(temp.getCut())),
-                        new Model_DiamondData(new SimpleStringProperty("Table Size"),new SimpleStringProperty(temp.getTableSize())),
-                        new Model_DiamondData(new SimpleStringProperty("Total Depth"),new SimpleStringProperty(temp.getTotalDepth())),
-                        new Model_DiamondData(new SimpleStringProperty("Min Girdle"),new SimpleStringProperty(temp.getMinGirdle())),
-                        new Model_DiamondData(new SimpleStringProperty("Max Girdle"),new SimpleStringProperty(temp.getMaxGirdle())),
-                        new Model_DiamondData(new SimpleStringProperty("Laser Inscription"),new SimpleStringProperty(temp.getLaserInscription()))
+                        new Model_DiamondData(new SimpleStringProperty("Date"),new SimpleStringProperty(temp.get(0))),
+                        new Model_DiamondData(new SimpleStringProperty("User Name"),new SimpleStringProperty(temp.get(1))),
+                        new Model_DiamondData(new SimpleStringProperty("User ID"),new SimpleStringProperty(temp.get(2))),
+                        new Model_DiamondData(new SimpleStringProperty("Number"),new SimpleStringProperty(temp.get(3))),
+                        new Model_DiamondData(new SimpleStringProperty("Shape & Cut"),new SimpleStringProperty(temp.get(4))),
+                        new Model_DiamondData(new SimpleStringProperty("Min Radius"),new SimpleStringProperty(temp.get(5))),
+                        new Model_DiamondData(new SimpleStringProperty("Max Radius"),new SimpleStringProperty(temp.get(6))),
+                        new Model_DiamondData(new SimpleStringProperty("Height"),new SimpleStringProperty(temp.get(7))),
+                        new Model_DiamondData(new SimpleStringProperty("Carat"),new SimpleStringProperty(temp.get(8))),
+                        new Model_DiamondData(new SimpleStringProperty("Color"),new SimpleStringProperty(temp.get(9))),
+                        new Model_DiamondData(new SimpleStringProperty("Clarity"),new SimpleStringProperty(temp.get(10))),
+                        new Model_DiamondData(new SimpleStringProperty("Cut"),new SimpleStringProperty(temp.get(11))),
+                        new Model_DiamondData(new SimpleStringProperty("Table Size"),new SimpleStringProperty(temp.get(12))),
+                        new Model_DiamondData(new SimpleStringProperty("Total Depth"),new SimpleStringProperty(temp.get(13))),
+                        new Model_DiamondData(new SimpleStringProperty("Min Girdle"),new SimpleStringProperty(temp.get(14))),
+                        new Model_DiamondData(new SimpleStringProperty("Max Girdle"),new SimpleStringProperty(temp.get(15))),
+                        new Model_DiamondData(new SimpleStringProperty("Laser Inscription"),new SimpleStringProperty(temp.get(16))),
+                        new Model_DiamondData(new SimpleStringProperty("Check Theft"),new SimpleStringProperty(temp.get(17)))
                 );
 
                 myTableView.setItems(myList);
@@ -164,8 +170,9 @@ public class Controller_Lookup implements Initializable {
     public void setLoginInfo(int loginInfo){
         this.loginInfo = loginInfo;
     }
-    public void setMyDB(Diamond_DB_ForMidterm myDB){
-        this.myDB = myDB;
+    public void setMyQuery(QueryClass myQuery, String randomDiamond){
+        this.myQuery = myQuery;
+        this.randomDiamond=randomDiamond;
     }
 
 }

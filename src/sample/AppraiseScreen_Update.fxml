@@ -44,19 +44,19 @@
          <children>
             <MenuButton fx:id="menu_Appraise_Update" alignment="CENTER" minHeight="27.0" minWidth="130.0" mnemonicParsing="false" text="항목" textAlignment="CENTER">
               <items>
-                  <MenuItem mnemonicParsing="false" text="Number" onAction="#update_menuitem1"/>
-                  <MenuItem mnemonicParsing="false" text="Shape &amp; Cut" onAction="#update_menuitem2"/>
-                  <MenuItem mnemonicParsing="false" text="Min Radius" onAction="#update_menuitem3"/>
-                  <MenuItem mnemonicParsing="false" text="Max Radius" onAction="#update_menuitem4"/>
-                  <MenuItem mnemonicParsing="false" text="Height" onAction="#update_menuitem5"/>
-                  <MenuItem mnemonicParsing="false" text="Carat" onAction="#update_menuitem6"/>
-                  <MenuItem mnemonicParsing="false" text="Color" onAction="#update_menuitem7"/>
-                  <MenuItem mnemonicParsing="false" text="Clarity" onAction="#update_menuitem8"/>
-                  <MenuItem mnemonicParsing="false" text="Cut" onAction="#update_menuitem9"/>
-                  <MenuItem mnemonicParsing="false" text="Table Size" onAction="#update_menuitem10"/>
-                  <MenuItem mnemonicParsing="false" text="Total Depth" onAction="#update_menuitem11"/>
-                  <MenuItem mnemonicParsing="false" text="Min Girdle" onAction="#update_menuitem12"/>
-                  <MenuItem mnemonicParsing="false" text="Max Girdle" onAction="#update_menuitem13"/>
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem1" text="Number" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem2" text="Shape &amp; Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem3" text="Min Radius" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem4" text="Max Radius" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem5" text="Height" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem6" text="Carat" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem7" text="Color" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem8" text="Clarity" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem9" text="Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem10" text="Table Size" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem11" text="Total Depth" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem12" text="Min Girdle" />
+                  <MenuItem mnemonicParsing="false" onAction="#update_menuitem13" text="Max Girdle" />
               </items>
                <HBox.margin>
                   <Insets />
@@ -103,6 +103,11 @@
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="For Demo" onAction="#appraiseScreen_Update_ForDemo">
+                     <HBox.margin>
+                        <Insets right="520.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button fx:id="btn_AppraiseScreen_Update_ReturnBack" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#appraiseScreen_Update_ReturnBack" text="돌아가기">
                      <font>
                         <Font name="Gulim" size="16.0" />
