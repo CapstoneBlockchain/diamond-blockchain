@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lkolisko.hyperledger.example.Controller_Appraise">
+   <children>
+      <HBox alignment="CENTER" prefHeight="10.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0">
+         <children>
+            <MenuButton fx:id="menu_Appraise_Add" alignment="CENTER" minHeight="27.0" minWidth="130.0" mnemonicParsing="false" text="항목" textAlignment="CENTER">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem1" text="Date" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem2" text="Number" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem3" text="Shape &amp; Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem4" text="Min Radius" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem5" text="Max Radius" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem6" text="Height" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem7" text="Carat" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem8" text="Color" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem9" text="Clarity" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem10" text="Cut" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem11" text="Table Size" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem12" text="Total Depth" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem13" text="Min Girdle" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem14" text="Max Girdle" />
+                  <MenuItem mnemonicParsing="false" onAction="#add_menuitem15" text="Laser Inscription" />
+              </items>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <font>
+                  <Font name="Gulim" size="12.0" />
+               </font>
+            </MenuButton>
+            <TextField fx:id="text_Appraise_AddData" prefHeight="35.0" prefWidth="400.0">
+               <HBox.margin>
+                  <Insets left="40.0" />
+               </HBox.margin>
+            </TextField>
+            <Button minHeight="35.0" minWidth="60.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_Modify" text="등록">
+               <font>
+                  <Font name="Gulim" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="35.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
+      <StackPane prefHeight="370.0" prefWidth="200.0">
+         <children>
+            <TableView fx:id="myTableView" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="listColumn" editable="false" maxWidth="2500.0" minWidth="5.0" prefWidth="2500.0" sortable="false" text="항목" />
+                <TableColumn fx:id="dataColumn" editable="false" prefWidth="75.0" sortable="false" text="정보" />
+              </columns>
+               <StackPane.margin>
+                  <Insets left="50.0" right="50.0" />
+               </StackPane.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </StackPane>
+      <StackPane alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btn_AppraiseScreen_Add_ForDemo" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" text="For Demo" onAction="#appraiseScreen_Add_ForDemo">
+                     <HBox.margin>
+                        <Insets right="520.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btn_AppraiseScreen_Add_ReturnBack" minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_ReturnBack" text="돌아가기">
+                     <font>
+                        <Font name="Gulim" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="17.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button minHeight="35.0" minWidth="100.0" mnemonicParsing="false" onAction="#appraiseScreen_Add_Add" text="등록">
+                     <font>
+                        <Font name="Gulim" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+   </children>
+</VBox>
