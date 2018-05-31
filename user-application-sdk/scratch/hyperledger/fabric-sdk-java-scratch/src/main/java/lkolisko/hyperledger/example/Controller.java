@@ -26,6 +26,7 @@ public class Controller implements Initializable {
     private String stealedDiamond;                                          // 도난당한 다이아의 번호
     private String randomDiamond;                                           // ForDemo 에서 쓰일, 랜덤 다이아 번호를 저장한 값
     private HFJavaSDKBasicExample myQuery;
+    private int forDemoNum;
 
     //TODO : DealScreen_CheckOwner 화면에서 쓰는 변수들
     @FXML
@@ -155,6 +156,7 @@ public class Controller implements Initializable {
         newOwnerName = "";
         basicOwnerDiamond = "";
         basicOwnerID = "";
+        forDemoNum=0;
     }
 
     public void setLoginInfo(int loginInfo) {
@@ -430,8 +432,15 @@ public class Controller implements Initializable {
 
     @FXML
     public void dealScreen_CheckOwner_ForDemo(){
-        textfield_DealScreen_CheckOwner_BasicOwner.setText("9606301478963");
-        textfield_DealScreen_CheckOwner_Diamond.setText(randomDiamond);
+        if(forDemoNum==0){
+            textfield_DealScreen_CheckOwner_BasicOwner.setText("9606301478963");
+            textfield_DealScreen_CheckOwner_Diamond.setText(randomDiamond);
+            forDemoNum++;
+        }
+        else{
+            textfield_DealScreen_CheckOwner_BasicOwner.setText("9911252014819");
+            textfield_DealScreen_CheckOwner_Diamond.setText(randomDiamond);
+        }
     }
 
 

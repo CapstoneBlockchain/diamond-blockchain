@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="javafx" name="fabric-sdk-java-scratch">
-    <output-path>D:/Android_Project</output-path>
+    <output-path>$PROJECT_DIR$</output-path>
     <properties id="javafx-properties">
       <options>
         <option name="appClass" value="lkolisko.hyperledger.example.Main" />

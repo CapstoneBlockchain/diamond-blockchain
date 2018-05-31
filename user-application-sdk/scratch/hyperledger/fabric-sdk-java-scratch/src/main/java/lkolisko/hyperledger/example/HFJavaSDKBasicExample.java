@@ -44,6 +44,7 @@ import java.util.jar.JarEntry;
  * @author lkolisko
  */
 public class HFJavaSDKBasicExample {
+    static String myIP="165.194.104.91";
     HFClient client;
 
     private static final Logger log = Logger.getLogger(HFJavaSDKBasicExample.class);
@@ -52,7 +53,7 @@ public class HFJavaSDKBasicExample {
         // create fabric-ca client
         HFCAClient caClient = null;
         try {
-            caClient = getHfCaClient("http://10.210.60.127:7054", null);
+            caClient = getHfCaClient("http://"+myIP+":7054", null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -426,11 +427,11 @@ public class HFJavaSDKBasicExample {
     static Channel getChannel(HFClient client) throws InvalidArgumentException, TransactionException {
         // initialize channel
         // peer name and endpoint in fabcar network
-        Peer peer = client.newPeer("peer0.org1.example.com", "grpc://10.210.60.127:7051");
+        Peer peer = client.newPeer("peer0.org1.example.com", "grpc://"+myIP+":7051");
         // eventhub name and endpoint in fabcar network
-        EventHub eventHub = client.newEventHub("eventhub01", "grpc://10.210.60.127:7053");
+        EventHub eventHub = client.newEventHub("eventhub01", "grpc://"+myIP+":7053");
         // orderer name and endpoint in fabcar network
-        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://10.210.60.127:7050");
+        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://"+myIP+":7050");
         // channel name in fabcar network
         Channel channel = client.newChannel("mychannel");
         channel.addPeer(peer);
