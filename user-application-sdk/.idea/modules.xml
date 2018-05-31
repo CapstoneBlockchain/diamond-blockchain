@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/scratch/hyperledger/fabric-sdk-java-scratch/fabric-sdk-java-scratch.iml" filepath="$PROJECT_DIR$/scratch/hyperledger/fabric-sdk-java-scratch/fabric-sdk-java-scratch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scratch/hyperledger/fabric-sdk-java-scratch/fabric-sdk-java-scratch.iml" filepath="$PROJECT_DIR$/scratch/hyperledger/fabric-sdk-java-scratch/fabric-sdk-java-scratch.iml" />
     </modules>
   </component>
 </project>

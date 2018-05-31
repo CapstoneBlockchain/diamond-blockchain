@@ -24,12 +24,12 @@
             </ImageView>
             <VBox alignment="CENTER_LEFT" maxHeight="150.0" maxWidth="250.0" minWidth="250.0" prefHeight="150.0" prefWidth="250.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 정보 조회에">
+                  <Text fx:id="text_LookupScreen_Popup_NOK_Text1" strokeType="OUTSIDE" strokeWidth="0.0" text="다이아 정보 조회에">
                      <font>
                         <Font name="Gulim" size="18.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="실패하였습니다.">
+                  <Text fx:id="text_LookupScreen_Popup_NOK_Text2" strokeType="OUTSIDE" strokeWidth="0.0" text="실패하였습니다.">
                      <font>
                         <Font name="Gulim" size="18.0" />
                      </font>

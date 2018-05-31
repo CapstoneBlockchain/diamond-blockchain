@@ -52,7 +52,7 @@ public class HFJavaSDKBasicExample {
         // create fabric-ca client
         HFCAClient caClient = null;
         try {
-            caClient = getHfCaClient("http://111.118.47.58:7054", null);
+            caClient = getHfCaClient("http://10.210.60.127:7054", null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -340,9 +340,23 @@ public class HFJavaSDKBasicExample {
 
     // TODO : basicOwnerID 와 basicOwnerDiamond 를 받아서, 일치하면(존재하면) true, 불일치하면 false return
     Boolean checkBasicOwner(String basicOwnerID, String basicOwnerDiamond){
-        ArrayList<ArrayList<String>> temp = getDiamond(client,basicOwnerDiamond);
+        try {
+            ArrayList<ArrayList<String>> temp = getDiamond(client,basicOwnerDiamond);
+            return temp.get(0).get(2).equals(basicOwnerID); // 이게 어떤 형태일지 모름.
+        }
+        catch (Exception e){
+            return false;
+        }
 
-        return temp.get(0).get(2).equals(basicOwnerID); // 이게 어떤 형태일지 모름.
+    }
+
+    // TODO : 해당 다이아몬드의 도난상태를 확인해서 리턴해준다. 도난당한 상태면 true 리턴.
+    Boolean checkTheftState(String diamond){
+        ArrayList<ArrayList<String>> temp = getDiamond(client,diamond);
+        if(temp.get(0).get(17).equals("true")){
+            return true;
+        }
+        return false;
     }
 
     // TODO : 거래 완료 시, 블록체인 시스템에 저장하기 위해 사용하는 함수.
@@ -412,11 +426,11 @@ public class HFJavaSDKBasicExample {
     static Channel getChannel(HFClient client) throws InvalidArgumentException, TransactionException {
         // initialize channel
         // peer name and endpoint in fabcar network
-        Peer peer = client.newPeer("peer0.org1.example.com", "grpc://111.118.47.58:7051");
+        Peer peer = client.newPeer("peer0.org1.example.com", "grpc://10.210.60.127:7051");
         // eventhub name and endpoint in fabcar network
-        EventHub eventHub = client.newEventHub("eventhub01", "grpc://111.118.47.58:7053");
+        EventHub eventHub = client.newEventHub("eventhub01", "grpc://10.210.60.127:7053");
         // orderer name and endpoint in fabcar network
-        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://111.118.47.58:7050");
+        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://10.210.60.127:7050");
         // channel name in fabcar network
         Channel channel = client.newChannel("mychannel");
         channel.addPeer(peer);

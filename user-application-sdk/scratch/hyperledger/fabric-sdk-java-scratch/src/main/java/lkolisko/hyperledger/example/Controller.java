@@ -306,22 +306,39 @@ public class Controller implements Initializable {
         basicOwnerDiamond = textfield_DealScreen_CheckOwner_Diamond.getText();
         try {
             if (myQuery.checkBasicOwner(basicOwnerID, basicOwnerDiamond)) {
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("DealScreen_Popup_OK.fxml"));
-                Parent parent = loader.load();
+                if(!myQuery.checkTheftState(basicOwnerDiamond)){
+                    FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("DealScreen_Popup_OK.fxml"));
+                    Parent parent = loader.load();
 
-                Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setOwner(basicOwnerID, basicOwnerDiamond, "", "");
+                    Controller controller = loader.getController();
+                    controller.setLoginInfo(loginInfo);
+                    controller.setMyQuery(myQuery,randomDiamond);
+                    controller.setOwner(basicOwnerID, basicOwnerDiamond, "", "");
 
-                Scene scene = new Scene(parent);
-                Stage primaryStage = (Stage) textfield_DealScreen_CheckOwner_BasicOwner.getScene().getWindow();
-                primaryStage.close();
+                    Scene scene = new Scene(parent);
+                    Stage primaryStage = (Stage) textfield_DealScreen_CheckOwner_BasicOwner.getScene().getWindow();
+                    primaryStage.close();
 
-                primaryStage.setScene(scene);
-                primaryStage.setTitle("소유자 조회 완료");
+                    primaryStage.setScene(scene);
+                    primaryStage.setTitle("소유자 조회 완료");
 
-                primaryStage.show();
+                    primaryStage.show();
+                }
+                else{
+                    FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("LookupScreen_Popup_NOK.fxml"));
+                    Parent parent = loader.load();
+
+                    Controller_Lookup controller = loader.getController();
+                    controller.setup_Text_ByTheft();
+
+                    Scene scene = new Scene(parent);
+
+                    Stage primaryStage = new Stage();
+                    primaryStage.setScene(scene);
+                    primaryStage.setTitle("거래 불가");
+
+                    primaryStage.show();
+                }
             } else {
                 FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("DealScreen_Popup_NOK.fxml"));
                 Parent parent = loader.load();
@@ -333,7 +350,6 @@ public class Controller implements Initializable {
                 primaryStage.setTitle("소유자 조회 실패");
 
                 primaryStage.show();
-
             }
         } catch (IOException e) {
             e.printStackTrace();

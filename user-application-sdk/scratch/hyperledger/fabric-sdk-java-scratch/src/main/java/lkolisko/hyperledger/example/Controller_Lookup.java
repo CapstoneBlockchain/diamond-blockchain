@@ -39,6 +39,10 @@ public class Controller_Lookup implements Initializable {
     private Button btn_LookupScreen_Popup_OK;
     @FXML
     private Button btn_LookupScreen_Popup_NOK;
+    @FXML
+    private Text text_LookupScreen_Popup_NOK_Text1;
+    @FXML
+    private Text text_LookupScreen_Popup_NOK_Text2;
 
 
     ObservableList<Model_DiamondData> myList;
@@ -162,6 +166,10 @@ public class Controller_Lookup implements Initializable {
         primaryStage.close();
     }
 
+    public void setup_Text_ByTheft(){
+        text_LookupScreen_Popup_NOK_Text1.setText("해당 다이아몬드는");
+        text_LookupScreen_Popup_NOK_Text2.setText("도난당한 상태입니다.");
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
