@@ -44,7 +44,7 @@ import java.util.jar.JarEntry;
  * @author lkolisko
  */
 public class HFJavaSDKBasicExample {
-    static String myIP="165.194.104.91";
+    static String myIP="165.194.104.200";
     HFClient client;
 
     private static final Logger log = Logger.getLogger(HFJavaSDKBasicExample.class);
