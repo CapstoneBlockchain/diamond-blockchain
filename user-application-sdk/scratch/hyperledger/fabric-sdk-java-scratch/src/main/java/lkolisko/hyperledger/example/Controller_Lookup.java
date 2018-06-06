@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 public class Controller_Lookup implements Initializable {
     private int loginInfo;
     private String randomDiamond;
+    private String myIP;
 
     @FXML
     private TextField text_Lookup_Diamond;
@@ -46,7 +47,7 @@ public class Controller_Lookup implements Initializable {
 
 
     ObservableList<Model_DiamondData> myList;
-    HFJavaSDKBasicExample myQuery = new HFJavaSDKBasicExample();
+    HFJavaSDKBasicExample myQuery;
 
     @FXML
     public void lookupScreen_forDemo(){
@@ -61,7 +62,7 @@ public class Controller_Lookup implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
+                controller.setLoginInfo(loginInfo,myIP);
                 controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
@@ -78,7 +79,7 @@ public class Controller_Lookup implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
+                controller.setLoginInfo(loginInfo,myIP);
                 controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
@@ -175,8 +176,9 @@ public class Controller_Lookup implements Initializable {
 
     }
 
-    public void setLoginInfo(int loginInfo){
+    public void setLoginInfo(int loginInfo,String myIP){
         this.loginInfo = loginInfo;
+        this.myIP = myIP;
     }
     public void setMyQuery(HFJavaSDKBasicExample myQuery, String randomDiamond){
         this.myQuery = myQuery;

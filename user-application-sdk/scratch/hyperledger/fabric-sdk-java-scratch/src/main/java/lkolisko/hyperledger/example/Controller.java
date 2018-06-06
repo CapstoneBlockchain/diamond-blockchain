@@ -27,6 +27,7 @@ public class Controller implements Initializable {
     private String randomDiamond;                                           // ForDemo 에서 쓰일, 랜덤 다이아 번호를 저장한 값
     private HFJavaSDKBasicExample myQuery;
     private int forDemoNum;
+    private String myIP;
 
     //TODO : DealScreen_CheckOwner 화면에서 쓰는 변수들
     @FXML
@@ -87,8 +88,6 @@ public class Controller implements Initializable {
     private Button btn_StealedScreen_Popup_OK;
 
 
-
-
     // TODO : 최초 실행 시 Login 화면에서 작동하는 Action들
     @FXML
     public void login_Appraise(ActionEvent actionEvent) {
@@ -97,15 +96,15 @@ public class Controller implements Initializable {
             Parent parent = (Parent) loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(0);
+            controller.setLoginInfo(0,myIP);
 
-            double temp = (Math.random()*1000000);
-            int num = (int)temp;
-            double temp2 = (Math.random()*100000);
-            int num2 = (int)temp2;
+            double temp = (Math.random() * 1000000);
+            int num = (int) temp;
+            double temp2 = (Math.random() * 100000);
+            int num2 = (int) temp2;
 
-            HFJavaSDKBasicExample myQuery = new HFJavaSDKBasicExample();
-            controller.setMyQuery(myQuery,"D"+String.valueOf(num)+String.valueOf(num2));
+            HFJavaSDKBasicExample myQuery = new HFJavaSDKBasicExample(myIP);
+            controller.setMyQuery(myQuery, "D" + String.valueOf(num) + String.valueOf(num2));
 
             Scene scene = new Scene(parent);
             Stage primaryStage = (Stage) btn_Login_Appraise.getScene().getWindow();
@@ -126,15 +125,15 @@ public class Controller implements Initializable {
             Parent parent = (Parent) loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(1);
+            controller.setLoginInfo(1,myIP);
 
-            double temp = (Math.random()*1000000);
-            int num = (int)temp;
-            double temp2 = (Math.random()*100000);
-            int num2 = (int)temp2;
+            double temp = (Math.random() * 1000000);
+            int num = (int) temp;
+            double temp2 = (Math.random() * 100000);
+            int num2 = (int) temp2;
 
-            HFJavaSDKBasicExample myQuery = new HFJavaSDKBasicExample();
-            controller.setMyQuery(myQuery,"D"+String.valueOf(num)+String.valueOf(num2));
+            HFJavaSDKBasicExample myQuery = new HFJavaSDKBasicExample(myIP);
+            controller.setMyQuery(myQuery, "D" + String.valueOf(num) + String.valueOf(num2));
 
             Scene scene = new Scene(parent);
             Stage primaryStage = (Stage) btn_Login_Appraise.getScene().getWindow();
@@ -148,6 +147,10 @@ public class Controller implements Initializable {
         }
     }
 
+    public void setIP(String argumentIP) {
+        myIP = argumentIP;
+    }
+
 
     // TODO : 컨트롤러 initialize 및, putExtra를 위한 함수들
     @Override
@@ -156,14 +159,15 @@ public class Controller implements Initializable {
         newOwnerName = "";
         basicOwnerDiamond = "";
         basicOwnerID = "";
-        forDemoNum=0;
+        forDemoNum = 0;
     }
 
-    public void setLoginInfo(int loginInfo) {
+    public void setLoginInfo(int loginInfo,String myIP) {
         this.loginInfo = loginInfo;
+        this.myIP = myIP;
     }
 
-    public void setMyQuery(HFJavaSDKBasicExample myQuery,String randomDiamond) {
+    public void setMyQuery(HFJavaSDKBasicExample myQuery, String randomDiamond) {
         this.myQuery = myQuery;
         this.randomDiamond = randomDiamond;
     }
@@ -184,8 +188,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -214,8 +218,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller_Lookup controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -248,8 +252,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -273,8 +277,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
 
             Scene scene = new Scene(parent);
 
@@ -308,13 +312,13 @@ public class Controller implements Initializable {
         basicOwnerDiamond = textfield_DealScreen_CheckOwner_Diamond.getText();
         try {
             if (myQuery.checkBasicOwner(basicOwnerID, basicOwnerDiamond)) {
-                if(!myQuery.checkTheftState(basicOwnerDiamond)){
+                if (!myQuery.checkTheftState(basicOwnerDiamond)) {
                     FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("DealScreen_Popup_OK.fxml"));
                     Parent parent = loader.load();
 
                     Controller controller = loader.getController();
-                    controller.setLoginInfo(loginInfo);
-                    controller.setMyQuery(myQuery,randomDiamond);
+                    controller.setLoginInfo(loginInfo,myIP);
+                    controller.setMyQuery(myQuery, randomDiamond);
                     controller.setOwner(basicOwnerID, basicOwnerDiamond, "", "");
 
                     Scene scene = new Scene(parent);
@@ -325,8 +329,7 @@ public class Controller implements Initializable {
                     primaryStage.setTitle("소유자 조회 완료");
 
                     primaryStage.show();
-                }
-                else{
+                } else {
                     FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("LookupScreen_Popup_NOK.fxml"));
                     Parent parent = loader.load();
 
@@ -366,8 +369,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) textfield_DealScreen_CheckOwner_Diamond.getScene().getWindow();
@@ -382,8 +385,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
-                controller.setMyQuery(myQuery,randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
+                controller.setMyQuery(myQuery, randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) textfield_DealScreen_CheckOwner_Diamond.getScene().getWindow();
@@ -409,8 +412,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
             controller.setOwner(basicOwnerID, basicOwnerDiamond, "", "");
 
             Scene scene = new Scene(parent);
@@ -431,13 +434,12 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void dealScreen_CheckOwner_ForDemo(){
-        if(forDemoNum==0){
+    public void dealScreen_CheckOwner_ForDemo() {
+        if (forDemoNum == 0) {
             textfield_DealScreen_CheckOwner_BasicOwner.setText("9606301478963");
             textfield_DealScreen_CheckOwner_Diamond.setText(randomDiamond);
             forDemoNum++;
-        }
-        else{
+        } else {
             textfield_DealScreen_CheckOwner_BasicOwner.setText("9911252014819");
             textfield_DealScreen_CheckOwner_Diamond.setText(randomDiamond);
         }
@@ -452,8 +454,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
             controller.setOwner(basicOwnerID, basicOwnerDiamond, textfield_DealScreen_RegisterNewOwner_ID.getText(), textfield_DealScreen_RegisterNewOwner_Name.getText());
             controller.setNewOwner(textfield_DealScreen_RegisterNewOwner_ID.getText(), textfield_DealScreen_RegisterNewOwner_Name.getText());
 
@@ -478,8 +480,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) textfield_DealScreen_RegisterNewOwner_ID.getScene().getWindow();
@@ -494,8 +496,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
-                controller.setMyQuery(myQuery,randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
+                controller.setMyQuery(myQuery, randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) textfield_DealScreen_RegisterNewOwner_ID.getScene().getWindow();
@@ -512,7 +514,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void dealScreen_RegisterNewOwner_ForDemo(){
+    public void dealScreen_RegisterNewOwner_ForDemo() {
         textfield_DealScreen_RegisterNewOwner_ID.setText("9911252014819");
         textfield_DealScreen_RegisterNewOwner_Name.setText("Kim JunHee");
     }
@@ -531,8 +533,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
             controller.setData(basicOwnerID, basicOwnerDiamond, newOwnerID, newOwnerName);
 
             Scene scene = new Scene(parent);
@@ -543,7 +545,7 @@ public class Controller implements Initializable {
             primaryStage.setTitle("거래 완료");
             primaryStage.show();
 
-            myQuery.changeOwner_Deal(newOwnerID,newOwnerName,basicOwnerDiamond);
+            myQuery.changeOwner_Deal(newOwnerID, newOwnerName, basicOwnerDiamond);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -557,8 +559,8 @@ public class Controller implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
             controller.setOwner(basicOwnerID, basicOwnerDiamond, "", "");
 
             Scene scene = new Scene(parent);
@@ -582,16 +584,17 @@ public class Controller implements Initializable {
         text_DealScreen_Complete_BasicID.setText(basicID);
         text_DealScreen_Complete_Diamond.setText(diamond);
     }
+
     @FXML
-    public void dealScreen_Complete_OK(){
+    public void dealScreen_Complete_OK() {
         try {
             if (loginInfo == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MainScreen_Appraise.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) text_DealScreen_Complete_BasicID.getScene().getWindow();
@@ -606,8 +609,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
-                controller.setMyQuery(myQuery,randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
+                controller.setMyQuery(myQuery, randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) text_DealScreen_Complete_BasicID.getScene().getWindow();
@@ -626,15 +629,15 @@ public class Controller implements Initializable {
 
     // TODO : StealedScreen_CheckOwner 화면에서 작동하는 Action들
     @FXML
-    public void stealedScreen_CheckOwner_ReturnBack(){
+    public void stealedScreen_CheckOwner_ReturnBack() {
         try {
             if (loginInfo == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MainScreen_Appraise.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) textfield_StealedScreen_CheckOwner_BasicOwner.getScene().getWindow();
@@ -649,8 +652,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
-                controller.setMyQuery(myQuery,randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
+                controller.setMyQuery(myQuery, randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) textfield_StealedScreen_CheckOwner_BasicOwner.getScene().getWindow();
@@ -665,8 +668,9 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
-    public void stealedScreen_CheckOwner_Lookup(){
+    public void stealedScreen_CheckOwner_Lookup() {
         stealedOwnerID = textfield_StealedScreen_CheckOwner_BasicOwner.getText();
         stealedDiamond = textfield_StealedScreen_CheckOwner_Diamond.getText();
         try {
@@ -675,9 +679,9 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setupText(stealedOwnerID,myQuery.getUserName(stealedDiamond),stealedDiamond,myQuery.getDate(stealedDiamond));
+                controller.setLoginInfo(loginInfo,myIP);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setupText(stealedOwnerID, myQuery.getUserName(stealedDiamond), stealedDiamond, myQuery.getDate(stealedDiamond));
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) textfield_StealedScreen_CheckOwner_Diamond.getScene().getWindow();
@@ -707,7 +711,7 @@ public class Controller implements Initializable {
 
 
     // TODO : StealedScreen_Complete 화면에서 작동하는 Action들
-    public void setupText(String ownerID,String ownerName, String diamond, String date){
+    public void setupText(String ownerID, String ownerName, String diamond, String date) {
         text_StealedScreen_Complete_OwnerID.setText(ownerID);
         text_StealedScreen_Complete_OwnerName.setText(ownerName);
         text_StealedScreen_Complete_Diamond.setText(diamond);
@@ -715,16 +719,17 @@ public class Controller implements Initializable {
 
         stealedDiamond = diamond;
     }
+
     @FXML
-    public void stealedScreen_Complete_ReturnBack(){
+    public void stealedScreen_Complete_ReturnBack() {
         try {
             if (loginInfo == 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("MainScreen_Appraise.fxml"));
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) text_StealedScreen_Complete_OwnerID.getScene().getWindow();
@@ -739,8 +744,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
-                controller.setMyQuery(myQuery,randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
+                controller.setMyQuery(myQuery, randomDiamond);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) text_StealedScreen_Complete_OwnerID.getScene().getWindow();
@@ -757,14 +762,14 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void stealedScreen_Complete_Complain(){
+    public void stealedScreen_Complete_Complain() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("StealedScreen_Popup_OK.fxml"));
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
-            controller.setMyQuery(myQuery,randomDiamond);
+            controller.setLoginInfo(loginInfo,myIP);
+            controller.setMyQuery(myQuery, randomDiamond);
 
             Scene scene = new Scene(parent);
             Stage primaryStage = (Stage) text_StealedScreen_Complete_OwnerID.getScene().getWindow();
@@ -782,7 +787,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void stealedScreen_Popup_OK_OK(){
+    public void stealedScreen_Popup_OK_OK() {
         Stage primaryStage = (Stage) btn_StealedScreen_Popup_OK.getScene().getWindow();
         primaryStage.close();
 
@@ -792,8 +797,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
 
@@ -806,8 +811,8 @@ public class Controller implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setMyQuery(myQuery, randomDiamond);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
 
@@ -822,7 +827,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void stealedScreen_CheckOwner_ForDemo(){
+    public void stealedScreen_CheckOwner_ForDemo() {
         textfield_StealedScreen_CheckOwner_BasicOwner.setText("9911252014819");
         textfield_StealedScreen_CheckOwner_Diamond.setText(randomDiamond);
     }

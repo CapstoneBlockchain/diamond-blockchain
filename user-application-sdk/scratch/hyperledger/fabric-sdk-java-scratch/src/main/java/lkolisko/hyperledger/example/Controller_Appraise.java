@@ -24,6 +24,7 @@ public class Controller_Appraise implements Initializable {
     private Boolean checked;
     private Boolean modified;
     private String randomDiamond;
+    private String myIP;
 
     private String nowState_Add;
     private Boolean added[] = new Boolean[15];
@@ -74,7 +75,7 @@ public class Controller_Appraise implements Initializable {
     private Button btn_AppraiseScreen_Modify_NOK;
 
 
-    HFJavaSDKBasicExample myQuery = new HFJavaSDKBasicExample();
+    HFJavaSDKBasicExample myQuery;
     ObservableList<Model_DiamondData> myList;
     ArrayList<String> updateDia;
 
@@ -91,8 +92,9 @@ public class Controller_Appraise implements Initializable {
         }
     }
 
-    public void setLoginInfo(int loginInfo) {
+    public void setLoginInfo(int loginInfo, String myIP) {
         this.loginInfo = loginInfo;
+        this.myIP = myIP;
     }
 
     // TODO : 다이아 감정의 선택 창에서 일어나는 Action들
@@ -103,7 +105,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
@@ -127,7 +129,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
             controller.setupNullData();
 
@@ -152,7 +154,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
@@ -313,7 +315,7 @@ public class Controller_Appraise implements Initializable {
                 Parent parent = loader.load();
 
                 Controller_Appraise controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
+                controller.setLoginInfo(loginInfo,myIP);
                 controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
@@ -356,7 +358,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
@@ -615,7 +617,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);
@@ -646,7 +648,7 @@ public class Controller_Appraise implements Initializable {
                 Parent parent = loader.load();
 
                 Controller_Appraise controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
+                controller.setLoginInfo(loginInfo,myIP);
                 controller.setMyQuery(myQuery,randomDiamond);
                 controller.setMyList(myList);
 
@@ -741,7 +743,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
             controller.setupData(myList);
 
@@ -772,7 +774,7 @@ public class Controller_Appraise implements Initializable {
             myList.add(2, new Model_DiamondData(new SimpleStringProperty("User ID"), new SimpleStringProperty(textfield_AppraiseScreen_Add_RegisterOwner_NewOwnerID.getText())));
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
             controller.setMyList(myList);
             controller.setNewOwner(myList.get(2).getData().getValue(), myList.get(1).getData().getValue());
@@ -810,7 +812,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
             controller.setMyList(myList);
 
@@ -835,7 +837,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller_Appraise controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
             controller.setFinalData(myList.get(2).getData().getValue(), myList.get(1).getData().getValue(), myList.get(16).getData().getValue());
 
@@ -874,7 +876,7 @@ public class Controller_Appraise implements Initializable {
 
                 Controller controller = loader.getController();
                 controller.setMyQuery(myQuery,randomDiamond);
-                controller.setLoginInfo(loginInfo);
+                controller.setLoginInfo(loginInfo,myIP);
 
                 Scene scene = new Scene(parent);
                 Stage primaryStage = (Stage) text_AppraiseScreen_Add_Complete_NewID.getScene().getWindow();
@@ -889,7 +891,7 @@ public class Controller_Appraise implements Initializable {
                 Parent parent = loader.load();
 
                 Controller controller = loader.getController();
-                controller.setLoginInfo(loginInfo);
+                controller.setLoginInfo(loginInfo,myIP);
                 controller.setMyQuery(myQuery,randomDiamond);
 
                 Scene scene = new Scene(parent);
@@ -917,7 +919,7 @@ public class Controller_Appraise implements Initializable {
             Parent parent = loader.load();
 
             Controller controller = loader.getController();
-            controller.setLoginInfo(loginInfo);
+            controller.setLoginInfo(loginInfo,myIP);
             controller.setMyQuery(myQuery,randomDiamond);
 
             Scene scene = new Scene(parent);

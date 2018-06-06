@@ -44,16 +44,22 @@ import java.util.jar.JarEntry;
  * @author lkolisko
  */
 public class HFJavaSDKBasicExample {
-    static String myIP="165.194.104.200";
+    static String myIP;
     HFClient client;
 
     private static final Logger log = Logger.getLogger(HFJavaSDKBasicExample.class);
 
-    public HFJavaSDKBasicExample(){
+    public HFJavaSDKBasicExample(String argumentIP) {
+        if (argumentIP.equals("no")) {
+            myIP = "165.194.104.94";
+        } else {
+            myIP = argumentIP;
+        }
+
         // create fabric-ca client
         HFCAClient caClient = null;
         try {
-            caClient = getHfCaClient("http://"+myIP+":7054", null);
+            caClient = getHfCaClient("http://" + myIP + ":7054", null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -340,75 +346,73 @@ public class HFJavaSDKBasicExample {
     }
 
     // TODO : basicOwnerID 와 basicOwnerDiamond 를 받아서, 일치하면(존재하면) true, 불일치하면 false return
-    Boolean checkBasicOwner(String basicOwnerID, String basicOwnerDiamond){
+    Boolean checkBasicOwner(String basicOwnerID, String basicOwnerDiamond) {
         try {
-            ArrayList<ArrayList<String>> temp = getDiamond(client,basicOwnerDiamond);
+            ArrayList<ArrayList<String>> temp = getDiamond(client, basicOwnerDiamond);
             return temp.get(0).get(2).equals(basicOwnerID); // 이게 어떤 형태일지 모름.
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
 
     }
 
     // TODO : 해당 다이아몬드의 도난상태를 확인해서 리턴해준다. 도난당한 상태면 true 리턴.
-    Boolean checkTheftState(String diamond){
-        ArrayList<ArrayList<String>> temp = getDiamond(client,diamond);
-        if(temp.get(0).get(17).equals("true")){
+    Boolean checkTheftState(String diamond) {
+        ArrayList<ArrayList<String>> temp = getDiamond(client, diamond);
+        if (temp.get(0).get(17).equals("true")) {
             return true;
         }
         return false;
     }
 
     // TODO : 거래 완료 시, 블록체인 시스템에 저장하기 위해 사용하는 함수.
-    void changeOwner_Deal(String newOwnerID,String newOwnerName,String basicOwnerDiamond){
-        changeOwner(client,basicOwnerDiamond,newOwnerName,newOwnerID);
+    void changeOwner_Deal(String newOwnerID, String newOwnerName, String basicOwnerDiamond) {
+        changeOwner(client, basicOwnerDiamond, newOwnerName, newOwnerID);
     }
 
     // TODO : 다이아몬드 일련번호 diamond 의 소유자 이름을 리턴시켜줌.
-    String getUserName(String diamond){
-        ArrayList<ArrayList<String>> temp = getDiamond(client,diamond);
+    String getUserName(String diamond) {
+        ArrayList<ArrayList<String>> temp = getDiamond(client, diamond);
         return temp.get(0).get(1); // 이게 어떤 형태일지 모름.
     }
 
     // TODO : 다이아몬드 일련번호 diamond 의 생성 시간을 리턴시켜줌.
-    String getDate(String diamond){
-        ArrayList<ArrayList<String>> temp = getDiamond(client,diamond);
+    String getDate(String diamond) {
+        ArrayList<ArrayList<String>> temp = getDiamond(client, diamond);
         return temp.get(0).get(0); // 이게 어떤 형태일지 모름.
     }
 
     // TODO : 다이아몬드 일련번호 diamond 의 도난 상태를 도난으로 변경시켜줌.
-    void setStealed(String diamond){
-        setTheft(client,diamond,"true");
+    void setStealed(String diamond) {
+        setTheft(client, diamond, "true");
     }
 
     // TODO : 다이아몬드 일련번호 diamond 가 존재하면 true 를 , 없으면 false 를 리턴시켜줌.
-    Boolean checkDia_Lookup(String diamond){
+    Boolean checkDia_Lookup(String diamond) {
         try {
-            ArrayList<ArrayList<String>> temp = getDiamond(client,diamond);
+            ArrayList<ArrayList<String>> temp = getDiamond(client, diamond);
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
     // TODO : 다이아몬드 일련번호 diamond 의 데이터를 리턴시켜줌.
-    ArrayList<String> getDiamondData(String diamond){
-        ArrayList<ArrayList<String>> temp = getDiamond(client,diamond);
+    ArrayList<String> getDiamondData(String diamond) {
+        ArrayList<ArrayList<String>> temp = getDiamond(client, diamond);
         return temp.get(0); // 이게 어떤 형태일지 모름.
     }
 
     // TODO : 다이아몬드 신규 등록. checkTheft 는 따로 설정해줘야함.
-    void setNewDiamond(String userName,String userID, String number, String shapeAndCut,String minR, String maxR, String height, String carat, String color,
-                       String clarity, String cut, String tableSize, String totalDepth, String minGirdle, String maxGirdle, String laserInscription,String date){
+    void setNewDiamond(String userName, String userID, String number, String shapeAndCut, String minR, String maxR, String height, String carat, String color,
+                       String clarity, String cut, String tableSize, String totalDepth, String minGirdle, String maxGirdle, String laserInscription, String date) {
         setDiamond(client, userName, userID, number, shapeAndCut, minR, maxR, height, carat, color, clarity, cut, tableSize, totalDepth, minGirdle, maxGirdle,
                 laserInscription, "false");
     }
 
     // TODO : 다이아몬드 업데이트. checkTheft 는 역시 따로 설정해줘야함.
-    void updateDiamond(String userName,String userID,String number, String shapeAndCut, String minR, String maxR, String height, String carat, String color,
-                       String clarity, String cut, String tableSize, String totalDepth, String minGirdle, String maxGirdle,String laserInscription){
+    void updateDiamond(String userName, String userID, String number, String shapeAndCut, String minR, String maxR, String height, String carat, String color,
+                       String clarity, String cut, String tableSize, String totalDepth, String minGirdle, String maxGirdle, String laserInscription) {
 
 
         updateDiamond(client, userName, userID, number, shapeAndCut, minR, maxR, height, carat, color, clarity, cut, tableSize, totalDepth, minGirdle, maxGirdle,
@@ -427,11 +431,11 @@ public class HFJavaSDKBasicExample {
     static Channel getChannel(HFClient client) throws InvalidArgumentException, TransactionException {
         // initialize channel
         // peer name and endpoint in fabcar network
-        Peer peer = client.newPeer("peer0.org1.example.com", "grpc://"+myIP+":7051");
+        Peer peer = client.newPeer("peer0.org1.example.com", "grpc://" + myIP + ":7051");
         // eventhub name and endpoint in fabcar network
-        EventHub eventHub = client.newEventHub("eventhub01", "grpc://"+myIP+":7053");
+        EventHub eventHub = client.newEventHub("eventhub01", "grpc://" + myIP + ":7053");
         // orderer name and endpoint in fabcar network
-        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://"+myIP+":7050");
+        Orderer orderer = client.newOrderer("orderer.example.com", "grpc://" + myIP + ":7050");
         // channel name in fabcar network
         Channel channel = client.newChannel("mychannel");
         channel.addPeer(peer);
