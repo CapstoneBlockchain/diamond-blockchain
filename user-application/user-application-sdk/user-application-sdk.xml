@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="user-application-sdk" default="all">
+  
+  
+  <property file="user-application-sdk.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.maven:_com.google.api.grpc:proto-google-common-protos:1.0.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/api/grpc/proto-google-common-protos/1.0.0/proto-google-common-protos-1.0.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.code.findbugs:jsr305:3.0.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/code/findbugs/jsr305/3.0.0/jsr305-3.0.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.code.gson:gson:2.7.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/code/gson/gson/2.7/gson-2.7.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.errorprone:error_prone_annotations:2.1.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/errorprone/error_prone_annotations/2.1.2/error_prone_annotations-2.1.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.guava:guava:20.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/guava/guava/20.0/guava-20.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.protobuf:protobuf-java-util:3.5.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/protobuf/protobuf-java-util/3.5.1/protobuf-java-util-3.5.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.google.protobuf:protobuf-java:3.5.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/protobuf/protobuf-java/3.5.1/protobuf-java-3.5.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_com.googlecode.json-simple:json-simple:1.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/googlecode/json-simple/json-simple/1.1/json-simple-1.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_commons-cli:commons-cli:1.4.classpath">
+    <pathelement location="${path.variable.maven_repository}/commons-cli/commons-cli/1.4/commons-cli-1.4.jar"/>
+  </path>
+  
+  <path id="library.maven:_commons-codec:commons-codec:1.10.classpath">
+    <pathelement location="${path.variable.maven_repository}/commons-codec/commons-codec/1.10/commons-codec-1.10.jar"/>
+  </path>
+  
+  <path id="library.maven:_commons-io:commons-io:2.6.classpath">
+    <pathelement location="${path.variable.maven_repository}/commons-io/commons-io/2.6/commons-io-2.6.jar"/>
+  </path>
+  
+  <path id="library.maven:_commons-logging:commons-logging:1.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.grpc:grpc-context:1.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/grpc/grpc-context/1.11.0/grpc-context-1.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.grpc:grpc-core:1.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/grpc/grpc-core/1.11.0/grpc-core-1.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.grpc:grpc-netty:1.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/grpc/grpc-netty/1.11.0/grpc-netty-1.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.grpc:grpc-protobuf-lite:1.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/grpc/grpc-protobuf-lite/1.11.0/grpc-protobuf-lite-1.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.grpc:grpc-protobuf:1.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/grpc/grpc-protobuf/1.11.0/grpc-protobuf-1.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.grpc:grpc-stub:1.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/grpc/grpc-stub/1.11.0/grpc-stub-1.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-buffer:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-buffer/4.1.22.Final/netty-buffer-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-codec-http2:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-codec-http2/4.1.22.Final/netty-codec-http2-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-codec-http:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-codec-http/4.1.22.Final/netty-codec-http-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-codec-socks:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-codec-socks/4.1.22.Final/netty-codec-socks-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-codec:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-codec/4.1.22.Final/netty-codec-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-common:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-common/4.1.22.Final/netty-common-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-handler-proxy:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-handler-proxy/4.1.22.Final/netty-handler-proxy-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-handler:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-handler/4.1.22.Final/netty-handler-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-resolver:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-resolver/4.1.22.Final/netty-resolver-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-tcnative-boringssl-static:2.0.8.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-tcnative-boringssl-static/2.0.8.Final/netty-tcnative-boringssl-static-2.0.8.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.netty:netty-transport:4.1.22.final.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/netty/netty-transport/4.1.22.Final/netty-transport-4.1.22.Final.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.opencensus:opencensus-api:0.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/opencensus/opencensus-api/0.11.0/opencensus-api-0.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_io.opencensus:opencensus-contrib-grpc-metrics:0.11.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/io/opencensus/opencensus-contrib-grpc-metrics/0.11.0/opencensus-contrib-grpc-metrics-0.11.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_javax.json:javax.json-api:1.1.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/javax/json/javax.json-api/1.1.2/javax.json-api-1.1.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_log4j:log4j:1.2.17.classpath">
+    <pathelement location="${path.variable.maven_repository}/log4j/log4j/1.2.17/log4j-1.2.17.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.commons:commons-compress:1.16.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/commons/commons-compress/1.16.1/commons-compress-1.16.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.httpcomponents:httpclient:4.5.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/httpcomponents/httpclient/4.5.5/httpclient-4.5.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.apache.httpcomponents:httpcore:4.4.9.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.bouncycastle:bcpkix-jdk15on:1.59.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/bouncycastle/bcpkix-jdk15on/1.59/bcpkix-jdk15on-1.59.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.bouncycastle:bcprov-jdk15on:1.59.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/bouncycastle/bcprov-jdk15on/1.59/bcprov-jdk15on-1.59.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.glassfish:javax.json:1.1.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/glassfish/javax.json/1.1.2/javax.json-1.1.2.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.hyperledger.fabric-sdk-java:fabric-sdk-java:1.1.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/hyperledger/fabric-sdk-java/fabric-sdk-java/1.1.0/fabric-sdk-java-1.1.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.objenesis:objenesis:2.6.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/objenesis/objenesis/2.6/objenesis-2.6.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.yaml:snakeyaml:1.20.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/yaml/snakeyaml/1.20/snakeyaml-1.20.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="javac2.jar"/>
+      <include name="jdom.jar"/>
+      <include name="asm-all*.jar"/>
+      <include name="jgoodies-forms.jar"/>
+    </fileset>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  <import file="${basedir}/scratch/hyperledger/fabric-sdk-java-scratch/module_fabric-sdk-java-scratch.xml"/>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.fabric-sdk-java-scratch, clean.artifact.fabric-sdk-java-scratch" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.fabric-sdk-java-scratch" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.fabric-sdk-java-scratch" value="${basedir}/out/artifacts/fabric_sdk_java_scratch"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="artifact.temp.output.fabric_sdk_java_scratch" value="${artifacts.temp.dir}/fabric_sdk_java_scratch.jar"/>
+    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath="${jdk.home.1.8}/lib/ant-javafx.jar"/>
+  </target>
+  
+  <target name="clean.artifact.fabric-sdk-java-scratch" description="clean fabric-sdk-java-scratch artifact output">
+    <delete dir="${artifact.output.fabric-sdk-java-scratch}"/>
+  </target>
+  
+  <target name="artifact.fabric-sdk-java-scratch" depends="init.artifacts, compile.module.fabric-sdk-java-scratch" description="Build &#39;fabric-sdk-java-scratch&#39; artifact" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <mkdir dir="${artifact.output.fabric-sdk-java-scratch}"/>
+    <copy todir="${artifact.temp.output.fabric_sdk_java_scratch}">
+      <fileset dir="${fabric-sdk-java-scratch.output.dir}"/>
+    </copy>
+    <fx:fileset id="all_but_fabric_sdk_java_scratch" dir="${artifact.temp.output.fabric_sdk_java_scratch}" includes="**/*.jar">
+      <exclude name="fabric_sdk_java_scratch.jar"/>
+    </fx:fileset>
+    <fx:fileset id="all_fabric_sdk_java_scratch" dir="${artifact.temp.output.fabric_sdk_java_scratch}" includes="**/*.jar"/>
+    <fx:application id="fabric_sdk_java_scratch_id" name="fabric-sdk-java-scratch" mainClass="null"/>
+    <fx:jar destfile="${artifact.temp.output.fabric_sdk_java_scratch}/fabric_sdk_java_scratch.jar">
+      <fx:application refid="fabric_sdk_java_scratch_id"/>
+      <fileset dir="${artifact.temp.output.fabric_sdk_java_scratch}" excludes="**/*.jar"/>
+      <fx:resources>
+        <fx:fileset refid="all_but_fabric_sdk_java_scratch"/>
+      </fx:resources>
+    </fx:jar>
+    <fx:deploy width="600" height="400" updatemode="background" outdir="${artifact.temp.output.fabric_sdk_java_scratch}/deploy" outfile="fabric_sdk_java_scratch">
+      <fx:application refid="fabric_sdk_java_scratch_id"/>
+      <fx:resources>
+        <fx:fileset refid="all_fabric_sdk_java_scratch"/>
+      </fx:resources>
+    </fx:deploy>
+    <copy todir="${artifact.output.fabric-sdk-java-scratch}">
+      <fileset dir="${artifact.temp.output.fabric_sdk_java_scratch}/deploy"/>
+    </copy>
+    <delete includeemptydirs="true">
+      <fileset dir="${artifact.temp.output.fabric_sdk_java_scratch}"/>
+    </delete>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.fabric-sdk-java-scratch" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
